@@ -5,6 +5,8 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <fstream>
+#include <sstream>
 
 MapGenerator::MapGenerator(const int width, const int height)
 {
@@ -39,41 +41,34 @@ void MapGenerator::Print()
 	}
 }
 
-void MapGenerator::SaveMap(*int[] mat)
+bool MapGenerator::SaveMap()
 {
-	std::string coolString = mat;
+	std::string coolString = "";
+	std::ostringstream convert;
+
+	for (int x = 0; x < m_width; x++){
+		convert << m_map[x];
+		coolString += convert.str();
+		convert.clear();
+		std::cout << coolString << std::endl;
+	}
+
+	std::ofstream myfile;
+	myfile.open("example.txt");
+	myfile << coolString << std::endl;
+	myfile.close();
+
+	std::cout << coolString << std::endl;
 
 
+
+	/*
 	std::ofstream coolFile;
 	coolFile.open("Example.txt");
 	coolFile << "Writing this to a file.\n";
 	coolFile.close();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	*/
+	return true;
 
 
 	/*
@@ -96,6 +91,7 @@ void MapGenerator::SaveMap(*int[] mat)
 	*/
 }
 
+/*
 void MapGenerator::loadMap()
 {
 	std::ifstream in;
@@ -117,6 +113,29 @@ void MapGenerator::loadMap()
 	}
 
 	in.close();
+}*/
+
+
+void MapGenerator::LoadMap(){
+
+	std::ifstream stream;
+	stream.open("CoolFile.txt");
+
+	if (stream.is_open())
+	{
+		int i = 0;
+
+		stream >> m_width;
+		stream >> m_height;
+
+		while (!stream.eof())
+		{
+			stream >> m_map[i];
+				i++;
+		}
+	}
+	stream.close();
+
 }
 
 void MapGenerator::Gen()

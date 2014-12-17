@@ -93,6 +93,7 @@
     <ClInclude Include="GameState.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="Keyboard.h" />
+    <ClInclude Include="MapGenerator.h" />
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="Paddle.h" />
     <ClInclude Include="Particle.h" />
@@ -116,7 +117,7 @@
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Keyboard.cpp" />
-    <ClCompile Include="main.cpp" />
+    <ClCompile Include="MapGenerator.cpp" />
     <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="Paddle.cpp" />
     <ClCompile Include="particle.cpp" />
