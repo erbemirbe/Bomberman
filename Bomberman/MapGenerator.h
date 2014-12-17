@@ -6,7 +6,6 @@ class MapGenerator {
 public:
 	MapGenerator(int width, int height);
 	void Print();
-	bool SaveMap();
 	void LoadMap();
 	~MapGenerator();
 	void Gen();
