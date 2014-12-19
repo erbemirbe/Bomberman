@@ -181,7 +181,7 @@ State* GameState::NextState()
 // private
 void GameState::CollisionChecking()
 {
-	Paddle* paddle = static_cast<Paddle*>(m_entities[0]);
+	/*Paddle* paddle = static_cast<Paddle*>(m_entities[0]);
 	Ball* ball = static_cast<Ball*>(m_entities[1]);
 
 	int overlapX = 0, overlapY = 0;
@@ -214,5 +214,5 @@ void GameState::CollisionChecking()
 				ball->SetPosition(ball->GetX() + overlapX, ball->GetY() + overlapY);
 			}
 		}
-	}
+	}*/
 }
