@@ -18,33 +18,30 @@
 GameState::GameState(System& system)
 {
 	m_systems = system;
-	std::string filename = "../assets/main.png";
+	std::string filename = "../assets/ss_bomberman_minimalistic.png";
 
 	//SpriteText* spritetext = m_systems.sprite_manager->CreateSprite("TTF", 50, "HelloWorld", 100, 100,100);
 
-
 	//create paddle
-	Sprite* sprite = m_systems.sprite_manager->CreateSprite(filename, 0, 0, 80, 16);
-	Paddle* paddle = new Paddle(
-		m_systems.input_manager->GetMouse(),
+	/*sprite* sprite = m_systems.sprite_manager->createsprite(filename, 0, 0, 80, 16);
+	paddle* paddle = new paddle(
+		m_systems.input_manager->getmouse(),
 		sprite,
 		m_systems.width,
 		m_systems.height);
-	m_entities.push_back(paddle);
-
-	sprite = m_systems.sprite_manager->CreateSprite(
-		filename, 82, 0, 16, 16);
+	m_entities.push_back(paddle);*/
 
 	//create ball
+	/*sprite = m_systems.sprite_manager->CreateSprite(filename, 82, 0, 16, 16);
 	Ball* ball = new Ball(sprite,
 		m_systems.width,
 		m_systems.height,
 		m_systems.width / 2 - 8, 
 		m_systems.height - 68 - 16);
-	m_entities.push_back(ball);
+	m_entities.push_back(ball);*/
 
 	// hard coded block coordinates
-	SDL_Rect blockCoords[] =
+	/*SDL_Rect blockCoords[] =
 	{
 		{ 100,  0, 40, 16 }, // green
 		{ 143,  0, 40, 16 }, // red
@@ -53,10 +50,10 @@ GameState::GameState(System& system)
 		{ 143, 18, 40, 16 }, // blue
 		{ 185, 18, 40, 16 }, // yellow
 		{ 100, 36, 40, 16 }, // orange
-	};
+	};*/
 
 	// create all blocks for level
-	int padding = 4;
+	/*int padding = 4;
 	int xNumBlocks = m_systems.width / (40 + padding);
 	int yNumBlocks = 16;
 	int xOffset = (m_systems.width % (40 + padding)) / 2;
@@ -74,9 +71,10 @@ GameState::GameState(System& system)
 				yOffset + y * 16 + y * padding);
 			m_entities.push_back(block);
 		}
-	}
+	}*/
 
 	m_active = false;
+
 }
 
 GameState::~GameState()
