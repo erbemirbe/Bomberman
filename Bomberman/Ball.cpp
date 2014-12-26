@@ -40,8 +40,11 @@ Ball::Ball(Sprite* sprite, int width, int height, float startX, float startY)
 
 	m_collider = new Collider(startX, startY);
 	m_collider->SetParent(this);
-	m_collider->SetWidthHeight(m_sprite->GetRegion()->w - m_offset,
-		m_sprite->GetRegion()->h - m_offset);
+
+	m_collider->SetWidthHeight(
+		m_sprite->GetRegion()->w - m_offset,
+		m_sprite->GetRegion()->h - m_offset
+	);
 
 	m_direction_x = 0.0f;
 	m_direction_y = 0.0f;

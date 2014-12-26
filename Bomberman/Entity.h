@@ -13,18 +13,27 @@ enum EEntityType
 
 class Sprite;
 class Collider;
+class EntityComponent;
 
 class Entity
 {
+
 public:
-	virtual ~Entity() {}
-	virtual void Update(float deltatime) = 0;
+	Entity();
+	virtual ~Entity();
+	/*
+	virtual void Update(float deltatime);
 	virtual Sprite* GetSprite() = 0;
 	virtual Collider* GetCollider() = 0;
 	virtual float GetX() = 0;
 	virtual float GetY() = 0;
 	virtual bool IsVisible() = 0;
 	virtual EEntityType GetType() = 0;
+	*/
+	std::map<std::string, EntityComponent*> m_components;
+
+private:
+
 };
 
 #endif // ENTITY_H_INCLUDED

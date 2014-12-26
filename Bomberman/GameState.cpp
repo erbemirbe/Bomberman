@@ -79,6 +79,7 @@ GameState::GameState(System& system)
 
 GameState::~GameState()
 {
+	/*dofix
 	int c = 0;
 	auto it = m_entities.begin();
 	while (it != m_entities.end())
@@ -91,10 +92,13 @@ GameState::~GameState()
 		c++;
 	}
 	m_entities.clear();
+	*/
 }
 
 bool GameState::Update(float deltatime)
 {
+
+	/*
 	// update all entities
 	for (unsigned int i = 0; i < m_entities.size(); i++)
 	{
@@ -146,17 +150,21 @@ bool GameState::Update(float deltatime)
 				}
 			}
 		}
+
+		
 	}
 
 	// we always do collision checking after updating 
 	// positions et al in entities
 	CollisionChecking();
-
+	*/
 	return true;
+	
 }
 
 void GameState::Draw()
 {
+	/*
 	for (unsigned int i = 0; i < m_entities.size(); i++)
 	{
 		if (!m_entities[i]->IsVisible())
@@ -170,6 +178,7 @@ void GameState::Draw()
 				m_entities[i]->GetY());
 		}
 	}
+	*/
 }
 
 State* GameState::NextState()

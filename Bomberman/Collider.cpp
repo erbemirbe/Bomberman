@@ -62,6 +62,7 @@ int Collider::GetHeight()
 
 void Collider::Refresh()
 {
-	m_area.x = m_parent->GetX();
-	m_area.y = m_parent->GetY();
+	//dofix
+	//m_area.x = m_parent->GetX();
+	//m_area.y = m_parent->GetY();
 }
