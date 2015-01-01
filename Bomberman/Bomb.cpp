@@ -5,6 +5,9 @@
 Bomb::Bomb()
 {
 	//m_components.insert(std::pair<std::string, SDL_Texture*>(, ));
+	//position
+	//timer
+	//
 }
 
 Bomb::~Bomb()
