@@ -8,9 +8,12 @@
 #include "Sprite.h"
 #include "GameState.h"
 
+
+/* remove these
 #include "Paddle.h"
 #include "Block.h"
 #include "Ball.h"
+*/
 
 #include "Collider.h"
 #include "CollisionManager.h"
@@ -28,16 +31,20 @@ GameState::GameState(System& system)
 		m_systems.input_manager->getmouse(),
 		sprite,
 		m_systems.width,
-		m_systems.height);
+		m_systems.height
+	);
+
 	m_entities.push_back(paddle);*/
 
 	//create ball
 	/*sprite = m_systems.sprite_manager->CreateSprite(filename, 82, 0, 16, 16);
-	Ball* ball = new Ball(sprite,
+	Ball* ball = new Ball(
+		sprite,
 		m_systems.width,
 		m_systems.height,
 		m_systems.width / 2 - 8, 
-		m_systems.height - 68 - 16);
+		m_systems.height - 68 - 16
+	);
 	m_entities.push_back(ball);*/
 
 	// hard coded block coordinates
@@ -52,7 +59,7 @@ GameState::GameState(System& system)
 		{ 100, 36, 40, 16 }, // orange
 	};*/
 
-	// create all blocks for level
+	// create all blocks for level 
 	/*int padding = 4;
 	int xNumBlocks = m_systems.width / (40 + padding);
 	int yNumBlocks = 16;

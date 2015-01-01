@@ -5,7 +5,6 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include <fstream>
 #include <sstream>
 
 MapGenerator::MapGenerator(const int width, const int height)

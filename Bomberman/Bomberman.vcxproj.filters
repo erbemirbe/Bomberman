@@ -96,7 +96,7 @@
     <ClInclude Include="Bomb.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="EntityCreator.h">
+    <ClInclude Include="EntityManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -173,10 +173,10 @@
     <ClCompile Include="Bomb.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="EntityCreator.cpp">
+    <ClCompile Include="Entity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Entity.cpp">
+    <ClCompile Include="EntityManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

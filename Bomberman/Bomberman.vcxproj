@@ -91,7 +91,7 @@
     <ClInclude Include="DrawManager.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="Entity.h" />
-    <ClInclude Include="EntityCreator.h" />
+    <ClInclude Include="EntityManager.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="Keyboard.h" />
@@ -122,7 +122,7 @@
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EntityComponent.cpp" />
-    <ClCompile Include="EntityCreator.cpp" />
+    <ClCompile Include="EntityManager.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Keyboard.cpp" />
