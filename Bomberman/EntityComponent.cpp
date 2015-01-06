@@ -13,7 +13,6 @@ EntityComponent::~EntityComponent()
 
 }
 
-
 void EntityComponent::Activate()
 {
 	m_activated = true;
@@ -36,5 +35,5 @@ void EntityComponent::Detach()
 
 void EntityComponent::Destroy()
 {
-		
+		//tell all entities to detach before destroying this completely
 }

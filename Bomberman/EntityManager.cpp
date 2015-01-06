@@ -1,18 +1,23 @@
 //EntityManager.cpp
 
-#include <fstream>
-
 #include "stdafx.h"
 #include "EntityManager.h"
+
 #include "Entity.h"
+#include "EntityComponent.h"
 
+#include "CTile.h"
+#include "CPos2D.h"
 
+//#include <fstream>
 
 EntityManager::EntityManager()
 {
+	/*dofix
 	std::ifstream stream;
+	
 	stream.open("CoolFile.txt");
-
+	
 	if (stream.is_open())
 	{
 		int i = 0;
@@ -43,12 +48,35 @@ EntityManager::~EntityManager()
 
 Entity* EntityManager::CreateEntity(std::string a)
 {
-	Entity shizzle;
-	return &shizzle;
+	//dofix
+	Entity* shizzle = nullptr;
+	return shizzle;
 }
 
-Entity* EntityManager::DeleteEntity(std::string a)
+Entity* EntityManager::CreatePlayerEntity(int XTile, int YTile)
 {
-	Entity shizzle;
-	return &shizzle;
+
+	Entity* bomb = new Entity();
+
+	EntityComponent* tile = new Ctile(XTile, YTile);
+	bomb->AddComponent("tile", tile);
+
+	//EntityComponent* timer = new CTimer(0, 0);
+	//bomb->AddComponent("Timer", timer);
+
+	EntityComponent* position = new CPos2D(0, 0);
+	bomb->AddComponent("position", position);
+
+	EntityComponent* sprite = new Sprite();
+	bomb->AddComponent("sprite", sprite);
+
+	m_entities.push_back(bomb);
+
+	return bomb;
+
+}
+
+void EntityManager::DeleteEntity(std::string a)
+{
+	//delete entity
 }

@@ -3,6 +3,7 @@
 #pragma once
 
 #include <String>
+#include <vector>
 
 class Entity;
 
@@ -13,8 +14,11 @@ public:
 	~EntityManager();
 
 	Entity* CreateEntity(std::string a);
+
+	Entity* CreatePlayerEntity(int, int); // for testing, will be moved or removed
+
 	void DeleteEntity(std::string a);
 
 private:
-
+	std::vector<Entity*>  m_entities;
 };

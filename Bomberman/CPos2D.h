@@ -1,5 +1,4 @@
-//CPos2D
-// Entity component for x,y position
+//CPos2D - Entity component for x,y position
 #pragma once
 
 #include "EntityComponent.h"
