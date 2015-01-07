@@ -8,7 +8,7 @@
 #include "Sprite.h"
 #include "GameState.h"
 
-#include "Paddle.h"
+#include "Steve.h"
 #include "Block.h"
 #include "Ball.h"
 
@@ -22,23 +22,47 @@ GameState::GameState(System& system)
 
 	//SpriteText* spritetext = m_systems.sprite_manager->CreateSprite("TTF", 50, "HelloWorld", 100, 100,100);
 
-	//create paddle
+	//create Steve
+	
+	Sprite* sprite = m_systems.sprite_manager->CreateSprite(filename, 0, 0, 64, 64);
+	Steve* steve = new Steve(
+		m_systems.input_manager->GetMouse(),
+		sprite,
+		m_systems.width,
+		m_systems.height
+	);
+	m_entities.push_back(steve);
+
+	sprite = m_systems.sprite_manager->CreateSprite(filename, 0, 0, 64, 64);
+	Steve* steve2 = new Steve(
+		m_systems.input_manager->GetMouse(),
+		sprite,
+		m_systems.width,
+		m_systems.height
+		);
+	m_entities.push_back(steve2);
+	
+
+
+	//create steve
 	/*sprite* sprite = m_systems.sprite_manager->createsprite(filename, 0, 0, 80, 16);
-	paddle* paddle = new paddle(
+	steve* steve = new steve(
 		m_systems.input_manager->getmouse(),
 		sprite,
 		m_systems.width,
 		m_systems.height);
-	m_entities.push_back(paddle);*/
+	m_entities.push_back(steve);*/
 
 	//create ball
-	/*sprite = m_systems.sprite_manager->CreateSprite(filename, 82, 0, 16, 16);
+	/*
+	Sprite* sprite = m_systems.sprite_manager->CreateSprite(filename, 82, 0, 16, 16);
 	Ball* ball = new Ball(sprite,
 		m_systems.width,
 		m_systems.height,
 		m_systems.width / 2 - 8, 
 		m_systems.height - 68 - 16);
-	m_entities.push_back(ball);*/
+	m_entities.push_back(ball);
+	*/
 
 	// hard coded block coordinates
 	/*SDL_Rect blockCoords[] =
@@ -95,6 +119,7 @@ GameState::~GameState()
 
 bool GameState::Update(float deltatime)
 {
+	/*
 	// update all entities
 	for (unsigned int i = 0; i < m_entities.size(); i++)
 	{
@@ -119,22 +144,22 @@ bool GameState::Update(float deltatime)
 			}
 			else if (!ball->IsActive())
 			{
-				// here the ball follows the paddle
+				// here the ball follows the steve
 				// note(tommi): we can do this because we always 
-				//   add the paddle first in the vector of entities
-				Paddle* paddle = static_cast<Paddle*>(m_entities[0]);
+				//   add the steve first in the vector of entities
+				Steve* steve = static_cast<Steve*>(m_entities[0]);
 
-				float paddleHalfWidth = paddle->GetSprite()->GetRegion()->w * 0.5f;
-				float paddleHalfHeight = paddle->GetSprite()->GetRegion()->h * 0.5f;
+				float steveHalfWidth = steve->GetSprite()->GetRegion()->w * 0.5f;
+				float steveHalfHeight = steve->GetSprite()->GetRegion()->h * 0.5f;
 
-				float paddlePosX = paddle->GetX();
-				float paddlePosY = paddle->GetY();
+				float stevePosX = steve->GetX();
+				float stevePosY = steve->GetY();
 
 				float ballHalfWidth = ball->GetSprite()->GetRegion()->w	* 0.5f;
 				float ballHalfHeight = ball->GetSprite()->GetRegion()->h	* 0.5f;
 
-				float ballNewX = paddlePosX + paddleHalfWidth - ballHalfWidth;
-				float ballNewY = paddlePosY - paddleHalfHeight - ballHalfHeight;
+				float ballNewX = stevePosX + steveHalfWidth - ballHalfWidth;
+				float ballNewY = stevePosY - steveHalfHeight - ballHalfHeight;
 
 				ball->SetPosition(ballNewX, ballNewY);
 
@@ -151,7 +176,7 @@ bool GameState::Update(float deltatime)
 	// we always do collision checking after updating 
 	// positions et al in entities
 	CollisionChecking();
-
+	*/
 	return true;
 }
 
@@ -181,11 +206,11 @@ State* GameState::NextState()
 // private
 void GameState::CollisionChecking()
 {
-	/*Paddle* paddle = static_cast<Paddle*>(m_entities[0]);
+	/*Steve* steve = static_cast<Steve*>(m_entities[0]);
 	Ball* ball = static_cast<Ball*>(m_entities[1]);
 
 	int overlapX = 0, overlapY = 0;
-	if (CollisionManager::Check(ball->GetCollider(), paddle->GetCollider(), overlapX, overlapY))
+	if (CollisionManager::Check(ball->GetCollider(), steve->GetCollider(), overlapX, overlapY))
 	{
 		if (overlapX != 0)
 			ball->InvertDirectionX();

@@ -95,7 +95,7 @@
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="MapGenerator.h" />
     <ClInclude Include="Mouse.h" />
-    <ClInclude Include="Paddle.h" />
+    <ClInclude Include="Steve.h" />
     <ClInclude Include="Particle.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Sprite.h" />
@@ -119,7 +119,7 @@
     <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="MapGenerator.cpp" />
     <ClCompile Include="Mouse.cpp" />
-    <ClCompile Include="Paddle.cpp" />
+    <ClCompile Include="Steve.cpp" />
     <ClCompile Include="particle.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="SpriteManager.cpp" />

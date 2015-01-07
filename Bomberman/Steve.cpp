@@ -1,12 +1,12 @@
-// Paddle.cpp
+// Steve.cpp
 
 #include "stdafx.h"
 #include "Mouse.h"
 #include "Sprite.h"
 #include "Collider.h"
-#include "Paddle.h"
+#include "Steve.h"
 
-Paddle::Paddle(Mouse* mouse, Sprite* sprite, int screen_width, int screen_height)
+Steve::Steve(Mouse* mouse, Sprite* sprite, int screen_width, int screen_height)
 {
 	m_mouse = mouse;
 	m_sprite = sprite;
@@ -25,13 +25,13 @@ Paddle::Paddle(Mouse* mouse, Sprite* sprite, int screen_width, int screen_height
 	Reset();
 }
 
-Paddle::~Paddle()
+Steve::~Steve()
 {
 	if (m_collider)
 		delete m_collider;
 }
 
-void Paddle::Update(float deltatime)
+void Steve::Update(float deltatime)
 {
 	float deltaX = m_mouse->GetX() - (m_x + static_cast<float>(m_sprite->GetRegion()->w * 0.5f));
 	if (static_cast<int>(deltaX) != 0)
@@ -48,39 +48,39 @@ void Paddle::Update(float deltatime)
 	}
 }
 
-Sprite* Paddle::GetSprite()
+Sprite* Steve::GetSprite()
 {
 	return m_sprite;
 }
 
-Collider* Paddle::GetCollider()
+Collider* Steve::GetCollider()
 {
 	return m_collider;
 }
 
-float Paddle::GetX()
+float Steve::GetX()
 {
 	return m_x;
 }
 
-float Paddle::GetY()
+float Steve::GetY()
 {
 	return m_y;
 }
 
-void Paddle::Reset()
+void Steve::Reset()
 {
 	m_x = m_screen_width / 2 - 40;
 	m_y = m_screen_height - 60 - 8;
 	m_collider->SetPosition(m_x, m_y);
 }
 
-bool Paddle::IsVisible() 
+bool Steve::IsVisible() 
 {
 	return true;
 }
 
-EEntityType Paddle::GetType()
+EEntityType Steve::GetType()
 {
-	return ENTITY_PADDLE;
+	return ENTITY_STEVE;
 }

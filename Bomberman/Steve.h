@@ -1,17 +1,17 @@
-// Paddle.h
+// Steve.h
 
-#ifndef PADDLE_H_INCLUDED
-#define PADDLE_H_INCLUDED
+#ifndef STEVE_H_INCLUDED
+#define STEVE_H_INCLUDED
 
 #include "Entity.h"
 
 class Mouse;
 
-class Paddle : public Entity
+class Steve : public Entity
 {
 public:
-	Paddle(Mouse* mouse, Sprite* sprite, int width, int height);
-	~Paddle();
+	Steve(Mouse* mouse, Sprite* sprite, int width, int height);
+	~Steve();
 	
 	void Update(float deltatime);
 	Sprite* GetSprite();
@@ -36,4 +36,4 @@ private:
 	int m_screen_height;
 };
 
-#endif // PADDLE_H_INCLUDED
+#endif // STEVE_H_INCLUDED

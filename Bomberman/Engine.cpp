@@ -35,8 +35,8 @@ bool Engine::Initialize()
 		const char* error = IMG_GetError();
 	}
 
-	int width = 360;
-	int height = 640;
+	int width = 1280;
+	int height = 960;
 	m_draw_manager = new DrawManager;
 	if (!m_draw_manager->Initialize(width, height))
 		return false;
