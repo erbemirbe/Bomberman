@@ -3,7 +3,9 @@
 #ifndef SPRITE_H_INCLUDED
 #define SPRITE_H_INCLUDED
 
-class Sprite
+#include "EntityComponent.h"
+
+class Sprite : public EntityComponent
 {
 public:
 	Sprite(SDL_Texture* texture);

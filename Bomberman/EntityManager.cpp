@@ -8,6 +8,7 @@
 
 #include "CTile.h"
 #include "CPos2D.h"
+#include "Sprite.h"
 
 //#include <fstream>
 
@@ -67,7 +68,7 @@ Entity* EntityManager::CreatePlayerEntity(int XTile, int YTile)
 	EntityComponent* position = new CPos2D(0, 0);
 	bomb->AddComponent("position", position);
 
-	EntityComponent* sprite = new Sprite();
+	EntityComponent* sprite m_systems.sprite_manager->createsprite("../assets/ss_bomberman_minimalistic.png", 0, 0, 80, 16);
 	bomb->AddComponent("sprite", sprite);
 
 	m_entities.push_back(bomb);
