@@ -5,6 +5,7 @@
 #include "DrawManager.h"
 #include "SpriteManager.h"
 #include "StateManager.h"
+#include "EntityManager.h"
 #include "GameState.h"
 #include "Engine.h"
 
@@ -15,6 +16,7 @@ Engine::Engine()
 	m_input_manager = nullptr;
 	m_sprite_manager = nullptr;
 	m_state_manager = nullptr;
+	m_entity_manager = nullptr;
 }
 
 Engine::~Engine()
@@ -44,6 +46,9 @@ bool Engine::Initialize()
 	m_input_manager = new InputManager;
 	m_sprite_manager = new SpriteManager(m_draw_manager->GetRenderer());
 	m_state_manager = new StateManager;
+	m_entity_manager = new EntityManager(m_sprite_manager);
+
+
 	
 	System system;
 	system.width = width;
@@ -75,6 +80,13 @@ void Engine::Shutdown()
 		delete m_draw_manager;
 		m_draw_manager = nullptr;
 	}
+	if (m_entity_manager)
+	{
+		delete m_entity_manager;
+		m_entity_manager = nullptr;
+	}
+		
+
 	IMG_Quit();
 	TTF_Quit();
 	SDL_Quit();

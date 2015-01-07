@@ -8,6 +8,7 @@ class DrawManager;
 class InputManager;
 class StateManager;
 class SpriteManager;
+class EntityManager;
 
 class Engine
 {
@@ -28,6 +29,8 @@ private:
 	InputManager* m_input_manager;
 	SpriteManager* m_sprite_manager;
 	StateManager* m_state_manager;
+	EntityManager* m_entity_manager;
+
 };
 
 #endif // ENGINE_H_INCLUDED
