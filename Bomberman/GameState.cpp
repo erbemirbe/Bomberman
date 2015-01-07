@@ -26,22 +26,12 @@ GameState::GameState(System& system)
 	
 	Sprite* sprite = m_systems.sprite_manager->CreateSprite(filename, 0, 0, 64, 64);
 	Steve* steve = new Steve(
-		m_systems.input_manager->GetMouse(),
+		m_systems.input_manager->GetKeyboard(),
 		sprite,
 		m_systems.width,
 		m_systems.height
 	);
 	m_entities.push_back(steve);
-
-	sprite = m_systems.sprite_manager->CreateSprite(filename, 0, 0, 64, 64);
-	Steve* steve2 = new Steve(
-		m_systems.input_manager->GetMouse(),
-		sprite,
-		m_systems.width,
-		m_systems.height
-		);
-	m_entities.push_back(steve2);
-	
 
 
 	//create steve
@@ -119,7 +109,7 @@ GameState::~GameState()
 
 bool GameState::Update(float deltatime)
 {
-	/*
+	
 	// update all entities
 	for (unsigned int i = 0; i < m_entities.size(); i++)
 	{
@@ -176,7 +166,7 @@ bool GameState::Update(float deltatime)
 	// we always do collision checking after updating 
 	// positions et al in entities
 	CollisionChecking();
-	*/
+	
 	return true;
 }
 

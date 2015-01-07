@@ -5,12 +5,12 @@
 
 #include "Entity.h"
 
-class Mouse;
+class keybaord;
 
 class Steve : public Entity
 {
 public:
-	Steve(Mouse* mouse, Sprite* sprite, int width, int height);
+	Steve(Keyboard* keyboard, Sprite* sprite, int width, int height);
 	~Steve();
 	
 	void Update(float deltatime);
@@ -25,7 +25,7 @@ public:
 	Collider* GetCollider();
 
 private:
-	Mouse* m_mouse;
+	Keyboard* m_keyboard;
 	Sprite* m_sprite;
 	Collider* m_collider;
 

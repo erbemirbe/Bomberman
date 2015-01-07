@@ -1,14 +1,14 @@
 // Steve.cpp
 
 #include "stdafx.h"
-#include "Mouse.h"
+#include "Keyboard.h"
 #include "Sprite.h"
 #include "Collider.h"
 #include "Steve.h"
 
-Steve::Steve(Mouse* mouse, Sprite* sprite, int screen_width, int screen_height)
+Steve::Steve(Keyboard* keyboard, Sprite* sprite, int screen_width, int screen_height)
 {
-	m_mouse = mouse;
+	m_keyboard = keyboard;
 	m_sprite = sprite;
 
 	m_collider = new Collider(0, 0);
@@ -33,7 +33,9 @@ Steve::~Steve()
 
 void Steve::Update(float deltatime)
 {
-	float deltaX = m_mouse->GetX() - (m_x + static_cast<float>(m_sprite->GetRegion()->w * 0.5f));
+//	if ()
+	//m_keyboard;
+	/*float deltaX = m_mouse->GetX() - (m_x + static_cast<float>(m_sprite->GetRegion()->w * 0.5f));
 	if (static_cast<int>(deltaX) != 0)
 	{
 		float dirX = deltaX / abs(deltaX);
@@ -45,7 +47,7 @@ void Steve::Update(float deltatime)
 			m_x = m_screen_width - 80.0f;
 
 		m_collider->SetPosition(m_x, m_y);
-	}
+	}*/
 }
 
 Sprite* Steve::GetSprite()
