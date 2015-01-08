@@ -49,3 +49,9 @@ void InputManager::SetKeyboard(int key, bool state)
 {
 	m_keyboard->SetKeyboard(key, state);
 }
+
+void InputManager::SetLastKeyboard()
+{
+	m_keyboard->SetLastKeyboard();
+}
+

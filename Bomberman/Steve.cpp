@@ -5,6 +5,8 @@
 #include "Sprite.h"
 #include "Collider.h"
 #include "Steve.h"
+#include <iostream>
+
 
 Steve::Steve(Keyboard* keyboard, Sprite* sprite, int screen_width, int screen_height)
 {
@@ -21,6 +23,9 @@ Steve::Steve(Keyboard* keyboard, Sprite* sprite, int screen_width, int screen_he
 	m_screen_height = screen_height;
 
 	m_speed = 2.0f;
+
+	m_bombs = 0;
+	m_max_bombs = 3;
 	
 	Reset();
 }
@@ -48,6 +53,35 @@ void Steve::Update(float deltatime)
 
 		m_collider->SetPosition(m_x, m_y);
 	}*/
+	
+	if (m_keyboard->IsKeyDown(SDLK_w))
+	{
+		m_y--;
+	}
+	if (m_keyboard->IsKeyDown(SDLK_s))
+	{
+		m_y++;
+	}
+	if (m_keyboard->IsKeyDown(SDLK_a))
+	{
+		m_x--;
+	}
+	if (m_keyboard->IsKeyDown(SDLK_d))
+	{
+		m_x++;
+	}
+	if (m_keyboard->IsKeyDown(SDLK_v))
+	{
+		LayBomb();
+	}
+
+}
+void Steve::LayBomb()
+{
+	if (m_bombs < m_max_bombs)
+	{
+		m_y++;
+	}
 }
 
 Sprite* Steve::GetSprite()

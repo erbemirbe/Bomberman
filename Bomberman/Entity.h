@@ -9,6 +9,7 @@ enum EEntityType
 	ENTITY_STEVE,
 	ENTITY_BLOCK,
 	ENTITY_BALL,
+	ENTITY_BOMB,
 };
 
 class Sprite;

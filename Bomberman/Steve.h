@@ -34,6 +34,10 @@ private:
 	float m_speed;
 	int m_screen_width;
 	int m_screen_height;
+	int m_bombs;
+	int m_max_bombs;
+	
+	void LayBomb();
 };
 
 #endif // STEVE_H_INCLUDED

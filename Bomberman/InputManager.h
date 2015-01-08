@@ -22,6 +22,7 @@ private:
 	void SetMousePosition(int x, int y);
 	void SetMouseButton(int index, bool state);
 	void SetKeyboard(int key, bool state);
+	void SetLastKeyboard();
 
 private:
 	Mouse* m_mouse;

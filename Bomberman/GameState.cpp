@@ -8,6 +8,7 @@
 #include "Sprite.h"
 #include "GameState.h"
 
+#include "Bomb.h"
 #include "Steve.h"
 #include "Block.h"
 #include "Ball.h"
@@ -24,7 +25,7 @@ GameState::GameState(System& system)
 
 	//create Steve
 	
-	Sprite* sprite = m_systems.sprite_manager->CreateSprite(filename, 0, 0, 64, 64);
+	Sprite* sprite = m_systems.sprite_manager->CreateSprite(filename, 32, 32, 64, 64);
 	Steve* steve = new Steve(
 		m_systems.input_manager->GetKeyboard(),
 		sprite,
@@ -32,6 +33,14 @@ GameState::GameState(System& system)
 		m_systems.height
 	);
 	m_entities.push_back(steve);
+
+	sprite = m_systems.sprite_manager->CreateSprite(filename, 16, 16, 64, 64);
+	Bomb* bomb = new Bomb(
+		sprite,
+		100,
+		100
+		);
+	m_entities.push_back(bomb);
 
 
 	//create steve
