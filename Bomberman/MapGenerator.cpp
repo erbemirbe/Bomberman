@@ -14,12 +14,7 @@ MapGenerator::MapGenerator(const int width, const int height)
 	m_height = 2 * height + 1;
 
 	m_map = new int[m_width * m_height];
-	
 
-	//m_map[0] = 1;
-	//m_map[2] = 1;
-	//m_map[23] = 1;
-	//m_map = nullptr;
 	Gen();
 }
 
@@ -74,6 +69,8 @@ void MapGenerator::Gen()
 			else m_map[y * m_width + x] = 1 + rand()%2;
 		}
 	}
+
+	//empty left top corner
 	m_map[0 * m_width + 0] = 1;
 	m_map[1 * m_width + 0] = 1;
 	m_map[0 * m_width + 1] = 1;
