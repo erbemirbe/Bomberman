@@ -44,8 +44,6 @@ bool Engine::Initialize()
 	m_input_manager = new InputManager;
 	m_sprite_manager = new SpriteManager(m_draw_manager->GetRenderer());
 	m_state_manager = new StateManager;
-
-
 	
 	System system;
 	system.width = width;
@@ -77,8 +75,6 @@ void Engine::Shutdown()
 		delete m_draw_manager;
 		m_draw_manager = nullptr;
 	}
-		
-
 	IMG_Quit();
 	TTF_Quit();
 	SDL_Quit();
@@ -98,7 +94,6 @@ void Engine::Update()
 		m_state_manager->Draw();
 		m_draw_manager->Present();
 
-		m_input_manager->SetLastKeyboard();
 		SDL_Delay(10);
 	}
 }
@@ -112,41 +107,39 @@ void Engine::HandleEvents()
 	{
 		switch (event.type)
 		{
-		case SDL_QUIT:
-			m_running = false;
+			case SDL_QUIT:
+				m_running = false;
+				break;
+
+			case SDL_MOUSEMOTION:
+				m_input_manager->SetMousePosition(event.motion.x, event.motion.y);
+				break;
+			case SDL_MOUSEBUTTONDOWN:
+			{
+				int index = event.button.button - 1;
+				if (index < 0)
+					index = 0;
+				else if (index > 2)
+					index = 2;
+				m_input_manager->SetMouseButton(index, true);
+			}
+				break;
+			case SDL_MOUSEBUTTONUP:
+			{
+				int index = event.button.button - 1;
+				if (index < 0)
+					index = 0;
+				else if (index > 2)
+					index = 2;
+				m_input_manager->SetMouseButton(index, false);
+			}
 			break;
 
-		case SDL_MOUSEMOTION:
-			m_input_manager->SetMousePosition(event.motion.x, event.motion.y);
-			break;
-		case SDL_MOUSEBUTTONDOWN:
-		{
-			int index = event.button.button - 1;
-			if (index < 0)
-				index = 0;
-			else if (index > 2)
-				index = 2;
-			m_input_manager->SetMouseButton(index, true);
-		}
-			break;
-		case SDL_MOUSEBUTTONUP:
-		{
-			int index = event.button.button - 1;
-			if (index < 0)
-				index = 0;
-			else if (index > 2)
-				index = 2;
-			m_input_manager->SetMouseButton(index, false);
-		}
-			break;
-
-		case SDL_KEYDOWN:
-			m_input_manager->SetKeyboard(event.key.keysym.sym, true);
-
-			break;
-		case SDL_KEYUP:
-			m_input_manager->SetKeyboard(event.key.keysym.sym, false);
-			break;
+			case SDL_KEYDOWN:
+				switch (event.key.keysym.sym){
+				//case SDLK_UP: m_input_manager->SetKeyboard() break;
+				}
+					
 		}
 	}
 }
