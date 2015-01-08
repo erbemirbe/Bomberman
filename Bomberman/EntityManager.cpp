@@ -70,8 +70,8 @@ Entity* EntityManager::CreatePlayerEntity(int XTile, int YTile)
 	EntityComponent* position = new CPos2D(0, 0);
 	bomb->AddComponent("position", position);
 
-	//EntityComponent* sprite m_sprite_manager->createsprite("../assets/ss_bomberman_minimalistic.png", 0, 0, 80, 16);
-	//bomb->AddComponent("sprite", sprite);
+	EntityComponent* sprite = m_sprite_manager->CreateSprite("../assets/ss_bomberman_minimalistic.png", 0, 0, 80, 16);
+	bomb->AddComponent("sprite", sprite);
 
 	m_entities.push_back(bomb);
 

@@ -106,6 +106,7 @@ void Engine::Update()
 		m_state_manager->Draw();
 		m_draw_manager->Present();
 
+		m_input_manager->SetLastKeyboard();
 		SDL_Delay(10);
 	}
 }
@@ -145,6 +146,14 @@ void Engine::HandleEvents()
 				index = 2;
 			m_input_manager->SetMouseButton(index, false);
 		}
+			break;
+
+		case SDL_KEYDOWN:
+			m_input_manager->SetKeyboard(event.key.keysym.sym, true);
+
+			break;
+		case SDL_KEYUP:
+			m_input_manager->SetKeyboard(event.key.keysym.sym, false);
 			break;
 		}
 	}

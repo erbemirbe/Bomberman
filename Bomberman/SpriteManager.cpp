@@ -77,15 +77,34 @@ Sprite* SpriteManager::CreateSprite(const std::string& filename, int x, int y, i
 			it = m_textures.find(filename);
 		}
 	}
+	/*
+	else // if the file exsists 
+	{
+		// then we check if the sprite exists
+		for (int i; i < m_sprites.size; i++){
+			if (
+				m_sprites[i]->GetRegion()->x == x	&&
+				m_sprites[i]->GetRegion()->y == y	&&
+				m_sprites[i]->GetRegion()->w == w 	&&
+				m_sprites[i]->GetRegion()->h == h	&&
+				m_sprites[i]->GetTexture() == ){
 
-	// then we create a new sprite 
-	// with the texture associated
-	Sprite* sprite = new Sprite(it->second);
-	sprite->GetRegion()->x = x;
-	sprite->GetRegion()->y = y;
-	sprite->GetRegion()->w = w;
-	sprite->GetRegion()->h = h;
-	m_sprites.push_back(sprite);
+			}
+		}
+	}
+	*/
+
+
+	
+
+		// then we create a new sprite 
+		// with the texture associated
+		Sprite* sprite = new Sprite(it->second);
+		sprite->GetRegion()->x = x;
+		sprite->GetRegion()->y = y;
+		sprite->GetRegion()->w = w;
+		sprite->GetRegion()->h = h;
+		m_sprites.push_back(sprite);
 
 	// return the newly newed sprite
 	return sprite;
