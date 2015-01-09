@@ -25,7 +25,7 @@ GameState::GameState(System& system)
 	//entity manager here
 
 	m_entity_manager->MakeEntity(ENTITY_BOMB,100,100);
-	m_entity_manager->MakeEntity(ENTITY_STEVE, 200, 200);
+	m_entity_manager->MakeEntity(ENTITY_STEVE, 500, 200);
 
 	
 

@@ -57,7 +57,7 @@ void EntityManager::MakeEntity(int EntityType, int x, int y)
 			);
 			m_active_entities.push_back(steve);
 		}
-		else if (EntityType == ENTITY_BRICK_WALL){
+		else if (EntityType == ENTITY_BRICK){
 		}
 		else if (EntityType == ENTITY_WALL){
 		}
