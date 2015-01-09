@@ -5,7 +5,7 @@
 
 #include "Entity.h"
 
-class Keyboard;
+class keybaord;
 
 class Steve : public Entity
 {
