@@ -1,0 +1,24 @@
+﻿Revert "Merge remote-tracking branch 'origin/safeplace' into EnGren"
+
+This reverts commit 9a6d257ffcb5d49cba0250a65523c02ec87e8fce, reversing
+changes made to 5fe75715993b5a2e36471a7a22f279edf75a2ef1.
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch EnGren
+# Your branch is ahead of 'origin/EnGren' by 4 commits.
+#   (use "git push" to publish your local commits)
+#
+# Changes to be committed:
+#	modified:   Bomberman/Bomb.cpp
+#	modified:   Bomberman/Bomberman.vcxproj
+#	modified:   Bomberman/Bomberman.vcxproj.filters
+#	new file:   Bomberman/Brick.cpp
+#	new file:   Bomberman/Brick.h
+#	new file:   Bomberman/Fire.cpp
+#	new file:   Bomberman/Fire.h
+#	modified:   Bomberman/GameState.cpp
+#	new file:   Bomberman/Wall.cpp
+#	new file:   Bomberman/Wall.h
+#
+
