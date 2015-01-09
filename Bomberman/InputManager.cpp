@@ -47,11 +47,12 @@ void InputManager::SetMouseButton(int index, bool state)
 
 void InputManager::SetKeyboard(int key, bool state)
 {
-	m_keyboard->SetKeyboard(key, state);
+	if (key < 256)
+		m_keyboard->SetKeyboard(key, state);
 }
 
 void InputManager::SetLastKeyboard()
 {
-	m_keyboard->SetLastKeyboard();
+		m_keyboard->SetLastKeyboard();
 }
 

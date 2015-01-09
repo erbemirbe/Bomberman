@@ -10,9 +10,14 @@ enum EEntityType
 	ENTITY_BLOCK,
 	ENTITY_BALL,
 	ENTITY_BOMB,
+<<<<<<< HEAD
 	ENTITY_FIRE,
 	ENTITY_WALL,
 	ENTITY_BRICK,
+=======
+	ENTITY_WALL,
+	ENTITY_BRICK_WALL,
+>>>>>>> origin/EnGren
 };
 
 class Sprite;
