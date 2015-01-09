@@ -5,13 +5,11 @@
 #include "InputManager.h"
 #include "DrawManager.h"
 #include "SpriteManager.h"
+#include "EntityManager.h"
 #include "Sprite.h"
 #include "GameState.h"
 
-#include "Bomb.h"
-#include "Steve.h"
-#include "Block.h"
-#include "Ball.h"
+#include "Entity.h"
 
 #include "Collider.h"
 #include "CollisionManager.h"
@@ -19,28 +17,22 @@
 GameState::GameState(System& system)
 {
 	m_systems = system;
-	std::string filename = "../assets/ss_bomberman_minimalistic.png";
+	m_entity_manager = new EntityManager(m_systems.sprite_manager, m_systems.input_manager);
+
+	m_entities = m_entity_manager->GetActiveEntities();
+	//entity manager here
+
+	m_entity_manager->MakeEntity(ENTITY_BOMB,100,100);
+	m_entity_manager->MakeEntity(ENTITY_STEVE, 200, 200);
+
+	
 
 	//SpriteText* spritetext = m_systems.sprite_manager->CreateSprite("TTF", 50, "HelloWorld", 100, 100,100);
 
 	//create Steve
 	
-	Sprite* sprite = m_systems.sprite_manager->CreateSprite(filename, 32, 32, 64, 64);
-	Steve* steve = new Steve(
-		m_systems.input_manager->GetKeyboard(),
-		sprite,
-		m_systems.width,
-		m_systems.height
-	);
-	m_entities.push_back(steve);
 
-	sprite = m_systems.sprite_manager->CreateSprite(filename, 16, 16, 64, 64);
-	Bomb* bomb = new Bomb(
-		sprite,
-		100,
-		100
-		);
-	m_entities.push_back(bomb);
+	
 
 
 	//create steve
@@ -103,8 +95,8 @@ GameState::GameState(System& system)
 GameState::~GameState()
 {
 	int c = 0;
-	auto it = m_entities.begin();
-	while (it != m_entities.end())
+	auto it = m_entities->begin();
+	while (it != m_entities->end())
 	{
 		Sprite* sprite = (*it)->GetSprite();
 		if (sprite)
@@ -113,21 +105,22 @@ GameState::~GameState()
 		++it;
 		c++;
 	}
-	m_entities.clear();
+	m_entities->clear();
 }
 
 bool GameState::Update(float deltatime)
 {
-	
 	// update all entities
-	for (unsigned int i = 0; i < m_entities.size(); i++)
+	for (unsigned int i = 0; i < m_entities->size(); i++)
 	{
-		if (!m_entities[i]->IsVisible())
+		if (! (*m_entities)[i]->IsVisible())
 			continue;
 
 		// update
-		m_entities[i]->Update(deltatime);
+		(*m_entities)[i]->Update(deltatime);
 
+
+		/*
 		// note(tommi): special treatment for the ball
 		if (m_entities[i]->GetType() == ENTITY_BALL)
 		{
@@ -170,6 +163,7 @@ bool GameState::Update(float deltatime)
 				}
 			}
 		}
+		*/
 	}
 
 	// we always do collision checking after updating 
@@ -181,17 +175,17 @@ bool GameState::Update(float deltatime)
 
 void GameState::Draw()
 {
-	for (unsigned int i = 0; i < m_entities.size(); i++)
+	for (unsigned int i = 0; i < m_entities->size(); i++)
 	{
-		if (!m_entities[i]->IsVisible())
+		if (!(*m_entities)[i]->IsVisible())
 			continue;
 
-		Sprite* sprite = m_entities[i]->GetSprite();
+		Sprite* sprite = (*m_entities)[i]->GetSprite();
 		if (sprite)
 		{
 			m_systems.draw_manager->Draw(sprite,
-				m_entities[i]->GetX(),
-				m_entities[i]->GetY());
+				(*m_entities)[i]->GetX(),
+				(*m_entities)[i]->GetY());
 		}
 	}
 }

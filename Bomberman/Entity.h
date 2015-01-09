@@ -10,6 +10,8 @@ enum EEntityType
 	ENTITY_BLOCK,
 	ENTITY_BALL,
 	ENTITY_BOMB,
+	ENTITY_WALL,
+	ENTITY_BRICK_WALL,
 };
 
 class Sprite;
