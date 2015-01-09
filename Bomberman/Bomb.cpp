@@ -14,7 +14,7 @@ Bomb::~Bomb()
 {
 }
 
-void Bomb::Reset()
+void Reset()
 {
 
 }

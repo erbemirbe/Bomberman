@@ -87,6 +87,7 @@
     <ClInclude Include="Bomb.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="Fire.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -94,6 +95,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Brick.h">
+=======
+    <ClInclude Include="EntityManager.h">
+>>>>>>> origin/safeplace
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -161,6 +165,7 @@
     <ClCompile Include="Bomb.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="Fire.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -168,6 +173,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Brick.cpp">
+=======
+    <ClCompile Include="EntityManager.cpp">
+>>>>>>> origin/safeplace
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
