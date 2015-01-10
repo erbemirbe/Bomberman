@@ -8,6 +8,9 @@
 #include "Sprite.h"
 #include "GameState.h"
 
+#include "Brick.h"
+#include "Wall.h"
+#include "Fire.h"
 #include "Bomb.h"
 #include "Steve.h"
 #include "Block.h"
@@ -41,6 +44,32 @@ GameState::GameState(System& system)
 		100
 		);
 	m_entities.push_back(bomb);
+
+	sprite = m_systems.sprite_manager->CreateSprite(filename, 16, 32, 64, 64);
+	Fire* fire = new Fire(
+		sprite,
+		200,
+		200
+		);
+	m_entities.push_back(fire);
+
+	sprite = m_systems.sprite_manager->CreateSprite(filename, 0, 0, 64, 64);
+	Wall* wall = new Wall(
+		sprite,
+		600,
+		100
+		);
+	m_entities.push_back(wall);
+
+	sprite = m_systems.sprite_manager->CreateSprite(filename, 64, 0, 64, 64);
+	Brick* brick = new Brick(
+		sprite,
+		664,
+		100
+		);
+	m_entities.push_back(brick);
+
+
 
 
 	//create steve
