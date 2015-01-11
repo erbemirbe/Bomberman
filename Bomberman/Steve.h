@@ -15,8 +15,6 @@ public:
 	
 	void Update(float deltatime);
 	Sprite* GetSprite();
-	float GetX();
-	float GetY();
 
 	void Reset();
 
@@ -29,8 +27,6 @@ private:
 	Sprite* m_sprite;
 	Collider* m_collider;
 
-	float m_x;
-	float m_y;
 	float m_speed;
 	int m_screen_width;
 	int m_screen_height;

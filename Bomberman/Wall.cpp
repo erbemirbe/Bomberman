@@ -51,13 +51,3 @@ Sprite* Wall::GetSprite()
 {
 	return m_sprite;
 }
-
-float Wall::GetX()
-{
-	return m_x;
-}
-
-float Wall::GetY()
-{
-	return m_y;
-}

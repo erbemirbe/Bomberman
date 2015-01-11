@@ -97,6 +97,7 @@
     <ClInclude Include="GameState.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="Keyboard.h" />
+    <ClInclude Include="Map.h" />
     <ClInclude Include="MapGenerator.h" />
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="Steve.h" />
@@ -121,11 +122,13 @@
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="DrawManager.cpp" />
     <ClCompile Include="Engine.cpp" />
+    <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EntityManager.cpp" />
     <ClCompile Include="Fire.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Keyboard.cpp" />
+    <ClCompile Include="Map.cpp" />
     <ClCompile Include="MapGenerator.cpp" />
     <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="Steve.cpp" />

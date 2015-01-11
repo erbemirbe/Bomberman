@@ -14,7 +14,7 @@ public:
 
 	std::vector<Entity*>* GetActiveEntities();
 	void MakeEntity( int  EntityType , int x , int y);
-
+	void RecycleEntity();
 private:
 	SpriteManager* m_sprite_manager;
 	InputManager* m_input_manager;

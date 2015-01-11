@@ -13,7 +13,7 @@
 #include "Steve.h"
 #include "Block.h"
 #include "Ball.h"
-
+#include "Wall.h"
 EntityManager::EntityManager(SpriteManager* spriteManager, InputManager* inputManager)
 {
 	m_sprite_manager = spriteManager;
@@ -32,6 +32,7 @@ std::vector<Entity*>* EntityManager::GetActiveEntities()
 
 void EntityManager::MakeEntity(int EntityType, int x, int y)
 {
+	Entity* entity;
 	auto it = m_inactive_entities.find(EntityType);
 	if (it == m_inactive_entities.end())
 	{
@@ -39,27 +40,23 @@ void EntityManager::MakeEntity(int EntityType, int x, int y)
 		if (EntityType == ENTITY_BOMB){
 			std::string filename = "../assets/ss_bomberman_minimalistic.png";
 			Sprite* sprite = m_sprite_manager->CreateSprite(filename, 16, 16, 64, 64);
-			Bomb* bomb = new Bomb(
-				sprite,
-				x,
-				y
-			);
-			m_active_entities.push_back(bomb);
+			entity = new Bomb(
+				sprite,x,y);
 		}
 		else if (EntityType == ENTITY_STEVE){
 			std::string filename = "../assets/ss_bomberman_minimalistic.png";
 			Sprite* sprite = m_sprite_manager->CreateSprite(filename, 32, 32, 64, 64);
-			Steve* steve = new Steve(
-				m_input_manager->GetKeyboard(),
-				sprite,
-				x,
-				y
-			);
-			m_active_entities.push_back(steve);
+			entity = new Steve( m_input_manager->GetKeyboard(), sprite, x, y);
 		}
 		else if (EntityType == ENTITY_BRICK){
+			std::string filename = "../assets/Bomberman.png";
+			Sprite* sprite = m_sprite_manager->CreateSprite(filename, 64, 0, 64, 64);
+			entity = new Wall(sprite, x, y);
 		}
 		else if (EntityType == ENTITY_WALL){
+			std::string filename = "../assets/Bomberman.png";
+			Sprite* sprite = m_sprite_manager->CreateSprite(filename, 0, 0, 64, 64);
+			entity = new Wall( sprite, x, y );
 		}
 	}
 	else
@@ -72,8 +69,7 @@ void EntityManager::MakeEntity(int EntityType, int x, int y)
 		//it->second.back()->Reset();
 
 		//add to active
-		m_active_entities.push_back(it->second.back());
-
+		entity = it->second.back();
 
 		//remove from inactive
 		it->second.pop_back();
@@ -82,6 +78,12 @@ void EntityManager::MakeEntity(int EntityType, int x, int y)
 		if (it->second.size() == 0)
 			m_inactive_entities.erase(it);
 	}
+	m_active_entities.push_back(entity);
+}
+
+void EntityManager::RecycleEntity()
+{
+
 }
 
 /*

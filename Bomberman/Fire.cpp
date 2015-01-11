@@ -35,15 +35,6 @@ Collider* Fire::GetCollider()
 	return m_collider;
 }
 
-void Fire::Activate()
-{
-	m_active = true;
-}
-bool Fire::IsActive()
-{
-	return m_active;
-}
-
 void Fire::SetPosition(int x, int y)
 {
 	m_x = x;
@@ -59,14 +50,4 @@ void Fire::Update(float deltatime)
 Sprite* Fire::GetSprite()
 {
 	return m_sprite;
-}
-
-float Fire::GetX()
-{
-	return m_x;
-}
-
-float Fire::GetY()
-{
-	return m_y;
 }

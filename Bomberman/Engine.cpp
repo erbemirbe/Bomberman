@@ -141,10 +141,12 @@ void Engine::HandleEvents()
 			break;
 
 		case SDL_KEYDOWN:
+			if (event.key.keysym.sym < 256)
 			m_input_manager->SetKeyboard(event.key.keysym.sym, true);
 
 			break;
 		case SDL_KEYUP:
+			if (event.key.keysym.sym < 256)
 			m_input_manager->SetKeyboard(event.key.keysym.sym, false);
 			break;
 		}

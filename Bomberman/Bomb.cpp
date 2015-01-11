@@ -41,29 +41,29 @@ Collider* Bomb::GetCollider()
 	return m_collider;
 }
 
-void Bomb::Activate()
-{
-	m_active = true;
-}
-
-bool Bomb::IsActive()
-{
-	return m_active;
-}
-
 void Bomb::Update(float deltatime)
 {
-
+	/*
+	if (IsActive)
+	{
+		m_time -= deltatime;
+		if (m_time < 0)
+			Explode();
+		//return true;
+	}
+	else {
+		//return false;
+	}
+	*/
 }
+
+void Bomb::Explode()
+{
+	//explode animation and stuff and then
+	Deactivate();
+}
+
 Sprite* Bomb::GetSprite()
 {
 	return m_sprite;
-}
-float Bomb::GetX()
-{
-	return m_x;
-}
-float Bomb::GetY()
-{
-	return m_y;
 }

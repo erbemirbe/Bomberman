@@ -14,20 +14,46 @@
 
 #include "Collider.h"
 #include "CollisionManager.h"
-
+#include "MapGenerator.h"
+#include "Map.h"
 GameState::GameState(System& system)
 {
 	m_systems = system;
 
 	m_entity_manager = new EntityManager(m_systems.sprite_manager, m_systems.input_manager);
-
 	m_entities = m_entity_manager->GetActiveEntities();
-	//entity manager here
 
-	m_entity_manager->MakeEntity(ENTITY_BOMB,100,100);
-	m_entity_manager->MakeEntity(ENTITY_STEVE, 500, 200);
+	MapGenerator* mapGen = new MapGenerator();
+	m_map = mapGen->Gen(9, 7);
 
 	
+	//Create map Entities
+	int* intMap = m_map->GetIntMap();
+	for (int i = 0; i < m_map->Size(); i++)
+	{
+		switch (intMap[i])
+		{
+		case 0:
+			m_entity_manager->MakeEntity(
+				ENTITY_WALL,
+				64 * (i % m_map->GetWidth()),
+				64 * (i / m_map->GetWidth())
+				);
+			break;
+		case 2:
+			m_entity_manager->MakeEntity(
+				ENTITY_BRICK,
+				64 * (i % m_map->GetWidth()),
+				64 * (i / m_map->GetWidth())
+			);
+			break;
+		
+		}
+	}
+	
+	//m_entity_manager->MakeEntity(ENTITY_GRASS, 0, 0);
+	m_entity_manager->MakeEntity(ENTITY_BOMB, 64, 0);
+	m_entity_manager->MakeEntity(ENTITY_STEVE, 0, 0);
 
 	//SpriteText* spritetext = m_systems.sprite_manager->CreateSprite("TTF", 50, "HelloWorld", 100, 100,100);
 
@@ -112,8 +138,16 @@ bool GameState::Update(float deltatime)
 		if (! (*m_entities)[i]->IsVisible())
 			continue;
 
-		// update
-		(*m_entities)[i]->Update(deltatime);
+		/*
+		if ( (*m_entities)[i]->GetType() == ENTITY_BOMB )
+		{
+			if (! (*m_entities)[i]->Update(deltatime) )
+				//pop it
+		}
+		else
+		{*/
+			(*m_entities)[i]->Update(deltatime);
+		//}
 
 		/*
 		// note(tommi): special treatment for the ball

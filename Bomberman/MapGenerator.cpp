@@ -1,6 +1,7 @@
 // MapGenerator.cpp
 #include "stdafx.h"
 #include "MapGenerator.h"
+#include "Map.h"
 
 #include <iostream>
 #include <fstream>
@@ -8,70 +9,59 @@
 #include <fstream>
 #include <sstream>
 
-MapGenerator::MapGenerator(const int width, const int height)
+MapGenerator::MapGenerator()
 {
-	m_width = 2 * width + 1;
-	m_height = 2 * height + 1;
 
-	m_map = new int[m_width * m_height];
-
-	Gen();
 }
 
-MapGenerator::~MapGenerator()
+Map* MapGenerator::LoadMap()
 {
-	delete[] m_map;
-}
-
-void MapGenerator::Print()
-{
-	for (int y = 0; y < m_height; y++)
-	{
-		for (int x = 0; x < m_width; x++)
-		{
-			std::cout << m_map[y * m_width + x];
-		}
-
-		std::cout << std::endl;
-	}
-}
-
-void MapGenerator::LoadMap(){
-
 	std::ifstream stream;
 	stream.open("CoolFile.txt");
 
 	if (stream.is_open())
 	{
+		int width;
+		int height;
+		int* intMap;
+
 		int i = 0;
 
-		stream >> m_width;
-		stream >> m_height;
+		stream >> width;
+		stream >> height;
+
+		intMap = new int[width * height];
 
 		while (!stream.eof())
 		{
-			stream >> m_map[i];
+			stream >> intMap[i];
 				i++;
 		}
+		return new Map(intMap, width, height);
 	}
 	stream.close();
-
 }
 
-void MapGenerator::Gen()
+Map* MapGenerator::Gen( int width, int height)
 {
+
+	width = 2 * width + 1;
+	height = 2 * height + 1;
+	int* intMap = new int[width * height];
 	
-	for (int y = 0; y < m_height; y++)
+	for (int y = 0; y < height; y++)
 	{
-		for (int x = 0; x < m_width; x++)
+		for (int x = 0; x < width; x++)
 		{
-			if (x % 2 == 1 && y % 2) m_map[y * m_width + x] = 0; 
-			else m_map[y * m_width + x] = 1 + rand()%2;
+			if (x % 2 == 1 && y % 2) intMap[y * width + x] = 0; 
+			else intMap[y * width + x] = 1 + rand()%2;
 		}
 	}
 
 	//empty left top corner
-	m_map[0 * m_width + 0] = 1;
-	m_map[1 * m_width + 0] = 1;
-	m_map[0 * m_width + 1] = 1;
+	intMap[0 * width + 0] = 1;
+	intMap[1 * width + 0] = 1;
+	intMap[0 * width + 1] = 1;
+
+	return new Map(intMap, width, height);
 }

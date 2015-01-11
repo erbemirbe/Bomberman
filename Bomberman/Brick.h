@@ -19,15 +19,9 @@ public:
 
 	void Update(float deltatime);
 	Sprite* GetSprite();
-	float GetX();
-	float GetY();
 
 
 private:
-	int m_x;
-	int m_y;
-
-	bool m_active;
 
 	Sprite* m_sprite;
 	Collider* m_collider;

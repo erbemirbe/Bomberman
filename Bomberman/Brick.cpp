@@ -51,13 +51,3 @@ Sprite* Brick::GetSprite()
 {
 	return m_sprite;
 }
-
-float Brick::GetX()
-{
-	return m_x;
-}
-
-float Brick::GetY()
-{
-	return m_y;
-}

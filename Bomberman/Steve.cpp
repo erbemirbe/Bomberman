@@ -94,16 +94,6 @@ Collider* Steve::GetCollider()
 	return m_collider;
 }
 
-float Steve::GetX()
-{
-	return m_x;
-}
-
-float Steve::GetY()
-{
-	return m_y;
-}
-
 void Steve::Reset()
 {
 	m_x = m_screen_width / 2 - 40;
