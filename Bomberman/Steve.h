@@ -5,7 +5,7 @@
 
 #include "Entity.h"
 
-class keybaord;
+class Keybaord;
 class Map;
 
 class Steve : public Entity
