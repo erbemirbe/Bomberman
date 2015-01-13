@@ -8,6 +8,15 @@
 class Keybaord;
 class Map;
 
+enum EDirection
+{
+	DIR_NONE,
+	DIR_UP,
+	DIR_LEFT,
+	DIR_DOWN,
+	DIR_RIGHT,
+};
+
 class Steve : public Entity
 {
 public:
@@ -36,7 +45,8 @@ private:
 	int m_max_bombs;
 	int m_x_dir;
 	int m_y_dir;
-	
+	int m_last_movement_key;
+	int m_last_movement_key2;
 	void LayBomb();
 };
 

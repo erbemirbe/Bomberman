@@ -39,20 +39,52 @@ Steve::~Steve()
 
 void Steve::Update(float deltatime)
 {
+	if (m_keyboard->IsKeyDownOnce(SDLK_w))
+	{
+		m_last_movement_key2 = m_last_movement_key;
+		 m_last_movement_key = DIR_UP;
+	}
+	else if (m_keyboard->IsKeyDownOnce(SDLK_a))
+	{
+		m_last_movement_key2 = m_last_movement_key;
+		m_last_movement_key = DIR_LEFT;
+	}
+	else if (m_keyboard->IsKeyDownOnce(SDLK_s))
+	{
+		m_last_movement_key2 = m_last_movement_key;
+		m_last_movement_key = DIR_DOWN;
+	}
+	else if (m_keyboard->IsKeyDownOnce(SDLK_d))
+	{
+		m_last_movement_key2 = m_last_movement_key;
+		m_last_movement_key = DIR_RIGHT;
+	}
+	else
+	{
+		if (!m_keyboard->IsKeyDown(SDLK_w) &&
+			!m_keyboard->IsKeyDown(SDLK_a) &&
+			!m_keyboard->IsKeyDown(SDLK_s) &&
+			!m_keyboard->IsKeyDown(SDLK_d)
+		)
+			m_last_movement_key = DIR_NONE;
+	}
+	std::cout << m_last_movement_key2 << std::endl;
+
 	int movement = m_speed * deltatime;
 
+	/* Testing key
 	if (m_keyboard->IsKeyDown(SDLK_f)){
 		std::cout <<" pos" << m_x << " " << m_y << std::endl;
 		std::cout << "grid " << (m_x + 31) / 64 << " " << (m_y + 31) / 64 << std::endl;
 		std::cout << m_x % 64 << std::endl;
-	}
+	}*/
 		
 	//(m_x+31)%64;
-	if (m_keyboard->IsKeyDown(SDLK_w))
+	if (m_last_movement_key == DIR_UP)
 	{
 		if (m_y % 64)
 		{ //y position is not perfectly aligned with grid
-			std::cout << "a" << std::endl;
+			//std::cout << "a" << std::endl;
 			if (m_y % 64 - movement < 0)
 			{ //Will cross grid
 				//Snap to the edge (to fix: and calculate how much movement you have left and loop)
@@ -66,11 +98,11 @@ void Steve::Update(float deltatime)
 		}
 		else if (m_map->GetPos( ((m_x + 31) / 64),  ((m_y + 31) / 64 - 1) ) == 1)
 		{ //Block above is free
-			std::cout << "b" << std::endl;
-			std::cout << !(m_x % 64)<< "true?" << std::endl;
+			//std::cout << "b" << std::endl;
+			//std::cout << !(m_x % 64)<< "true?" << std::endl;
 			if (!(m_x % 64))
 			{ //Perfectly aligned x-wise
-				std::cout << "perfectly aligned" << std::endl;
+				//std::cout << "perfectly aligned" << std::endl;
 
 				//if (m_y % 64 - movement < 0)
 				//{ //Snap to the edge (to fix: and calculate how much movement you have left and loop)
@@ -83,19 +115,19 @@ void Steve::Update(float deltatime)
 			}
 			else
 			{ //Not perfectly aligned x-wise
-				std::cout << "Not perfect" << std::endl;
+				//std::cout << "Not perfect" << std::endl;
 				//Get b block
 				int b;
 				if (m_x % 64 <= 32){
 					b = m_map->GetPos(((m_x + 31) / 64)+1, ((m_y + 31) / 64) -1);
-					std::cout << "x =" << ((m_x + 31) / 64) + 1 << " y = " << ((m_y + 31) / 64) - 1 << " and it is of type:" << b;
+					//std::cout << "x =" << ((m_x + 31) / 64) + 1 << " y = " << ((m_y + 31) / 64) - 1 << " and it is of type:" << b;
 				}
 				else{
 					b = m_map->GetPos(((m_x + 31) / 64) - 1, ((m_y + 31) / 64) - 1);
-					std::cout << "x =" << ((m_x + 31) / 64) - 1 << " y = " << ((m_y + 31) / 64) - 1 << " and it is of type:" << b;
+					//std::cout << "x =" << ((m_x + 31) / 64) - 1 << " y = " << ((m_y + 31) / 64) - 1 << " and it is of type:" << b;
 				}
 
-				std::cout << m_map->GetPos(2, 4);
+				//std::cout << m_map->GetPos(2, 4);
 
 				if (b == 1)
 				{ //B is free
@@ -113,7 +145,7 @@ void Steve::Update(float deltatime)
 				}
 				else
 				{ // B is not free
-					std::cout << "B is NOT free" << std::endl;
+					//std::cout << "B is NOT free" << std::endl;
 					if (m_x % 64 <= 32)
 					{ //A block is to the left. (might be the reverse)
 						if (m_x % 64 - movement < 0)
@@ -141,24 +173,24 @@ void Steve::Update(float deltatime)
 		}
 		else
 		{ //A is blocked
-			std::cout << "c" << std::endl;
+			//std::cout << "c" << std::endl;
 			if (m_x % 64)
 			{ // Perfectly aligned x-wise
 				//Get b block
 				int b;
 				if (m_x % 64 <= 32){
 					b = m_map->GetPos(((m_x + 31) / 64) + 1, ((m_y + 31) / 64) - 1);
-					std::cout << ((m_x + 31) / 64) + 1 << " " << ((m_y + 31) / 64) - 1 << std::endl;
+					//std::cout << ((m_x + 31) / 64) + 1 << " " << ((m_y + 31) / 64) - 1 << std::endl;
 				}
 					
 				else{
 					b = m_map->GetPos(((m_x + 31) / 64) - 1, ((m_y + 31) / 64) - 1);
-					std::cout << ((m_x + 31) / 64) -1 << " " << ((m_y + 31) / 64) - 1 << std::endl;
+					//std::cout << ((m_x + 31) / 64) -1 << " " << ((m_y + 31) / 64) - 1 << std::endl;
 				}
 
 				if (b == 1)
 				{ //B is free
-					std::cout << "b is free!" << std::endl;
+					//std::cout << "b is free!" << std::endl;
 					if (m_x % 64 <= 32)
 					{ //B block is to the right. (might be the reverse)
 						if (m_x % 64 - movement < 0)
@@ -172,7 +204,7 @@ void Steve::Update(float deltatime)
 					}
 					else
 					{ //B block is to the left
-						std::cout << "shit is to the left go left" << std::endl;
+						//std::cout << "shit is to the left go left" << std::endl;
 						if (m_x % 64 - movement < 0)
 						{ //Snap to the edge (to fix: and calculate how much movement you have left and loop)
 							m_x -= m_x % 64;
@@ -197,11 +229,11 @@ void Steve::Update(float deltatime)
 
 		}
 	}
-	if (m_keyboard->IsKeyDown(SDLK_a))
+	if (m_last_movement_key == DIR_LEFT)
 	{
 		if (m_x % 64)
 		{ //y position is not perfectly aligned with grid
-			std::cout << "a" << std::endl;
+			//std::cout << "a" << std::endl;
 			if (m_x % 64 - movement < 0)
 			{ //Will cross grid
 				//Snap to the edge (to fix: and calculate how much movement you have left and loop)
@@ -215,11 +247,11 @@ void Steve::Update(float deltatime)
 		}
 		else if (m_map->GetPos(((m_x + 31) / 64 - 1), ((m_y + 31) / 64)) == 1)
 		{ //Block above is free
-			std::cout << "b" << std::endl;
-			std::cout << !(m_y % 64) << "true?" << std::endl;
+			//std::cout << "b" << std::endl;
+			//std::cout << !(m_y % 64) << "true?" << std::endl;
 			if (!(m_y % 64))
 			{ //Perfectly aligned x-wise
-				std::cout << "perfectly aligned" << std::endl;
+				//std::cout << "perfectly aligned" << std::endl;
 
 				//if (m_x % 64 - movement < 0)
 				//{ //Snap to the edge (to fix: and calculate how much movement you have left and loop)
@@ -232,19 +264,19 @@ void Steve::Update(float deltatime)
 			}
 			else
 			{ //Not perfectly aligned x-wise
-				std::cout << "Not perfect" << std::endl;
+				//std::cout << "Not perfect" << std::endl;
 				//Get b block
 				int b;
 				if (m_y % 64 <= 32){
 					b = m_map->GetPos(((m_x + 31) / 64) - 1, ((m_y + 31) / 64) + 1);
-					std::cout << "x = " << ((m_y + 31) / 64) + 1 << " y = " << ((m_x + 31) / 64) - 1 << " and it is of type:" << b;
+					//std::cout << "x = " << ((m_y + 31) / 64) + 1 << " y = " << ((m_x + 31) / 64) - 1 << " and it is of type:" << b;
 				}
 				else{
 					b = m_map->GetPos(((m_x + 31) / 64) - 1, ((m_y + 31) / 64) - 1);
-					std::cout << "x = " << ((m_y + 31) / 64) - 1 << " y = " << ((m_x + 31) / 64) - 1 << " and it is of type:" << b;
+					//std::cout << "x = " << ((m_y + 31) / 64) - 1 << " y = " << ((m_x + 31) / 64) - 1 << " and it is of type:" << b;
 				}
 
-				std::cout << m_map->GetPos(2, 4);
+				//std::cout << m_map->GetPos(2, 4);
 
 				if (b == 1)
 				{ //B is free
@@ -262,7 +294,7 @@ void Steve::Update(float deltatime)
 				}
 				else
 				{ // B is not free
-					std::cout << "B is NOT free" << std::endl;
+					//std::cout << "B is NOT free" << std::endl;
 					if (m_y % 64 <= 32)
 					{ //A block is to the left. (might be the reverse)
 						if (m_y % 64 - movement < 0)
@@ -290,24 +322,24 @@ void Steve::Update(float deltatime)
 		}
 		else
 		{ //A is blocked
-			std::cout << "c" << std::endl;
+			//std::cout << "c" << std::endl;
 			if (m_y % 64)
 			{ // Perfectly aligned x-wise
 				//Get b block
 				int b;
 				if (m_y % 64 <= 32){
 					b = m_map->GetPos(((m_x + 31) / 64) - 1, ((m_y + 31) / 64) + 1);
-					std::cout << ((m_y + 31) / 64) + 1 << " " << ((m_x + 31) / 64) - 1 << std::endl;
+					//std::cout << ((m_y + 31) / 64) + 1 << " " << ((m_x + 31) / 64) - 1 << std::endl;
 				}
 
 				else{
 					b = m_map->GetPos(((m_x + 31) / 64) - 1, ((m_y + 31) / 64) - 1);
-					std::cout << ((m_y + 31) / 64) - 1 << " " << ((m_x + 31) / 64) - 1 << std::endl;
+					//std::cout << ((m_y + 31) / 64) - 1 << " " << ((m_x + 31) / 64) - 1 << std::endl;
 				}
 
 				if (b == 1)
 				{ //B is free
-					std::cout << "b is free!" << std::endl;
+					//std::cout << "b is free!" << std::endl;
 					if (m_y % 64 <= 32)
 					{ //B block is to the right. (might be the reverse)
 						if (m_y % 64 - movement < 0)
@@ -321,7 +353,7 @@ void Steve::Update(float deltatime)
 					}
 					else
 					{ //B block is to the left
-						std::cout << "shit is to the left go left" << std::endl;
+						//std::cout << "shit is to the left go left" << std::endl;
 						if (m_y % 64 - movement < 0)
 						{ //Snap to the edge (to fix: and calculate how much movement you have left and loop)
 							m_y -= m_y % 64;
@@ -346,11 +378,11 @@ void Steve::Update(float deltatime)
 
 		}
 	}
-	if (m_keyboard->IsKeyDown(SDLK_s))
+	if (m_last_movement_key == DIR_DOWN)
 	{
 		if (m_y % 64)
 		{ //y position is not perfectly aligned with grid
-			std::cout << "a" << std::endl;
+			//std::cout << "a" << std::endl;
 			if (m_y % 64 - movement < 0)
 			{ //Will cross grid
 				//Snap to the edge (to fix: and calculate how much movement you have left and loop)
@@ -364,11 +396,11 @@ void Steve::Update(float deltatime)
 		}
 		else if (m_map->GetPos(((m_x + 31) / 64), ((m_y + 31) / 64 + 1)) == 1)
 		{ //Block above is free
-			std::cout << "b" << std::endl;
-			std::cout << !(m_x % 64) << "true?" << std::endl;
+			//std::cout << "b" << std::endl;
+			//std::cout << !(m_x % 64) << "true?" << std::endl;
 			if (!(m_x % 64))
 			{ //Perfectly aligned x-wise
-				std::cout << "perfectly aligned" << std::endl;
+				//std::cout << "perfectly aligned" << std::endl;
 
 				//if (m_y % 64 - movement < 0)
 				//{ //Snap to the edge (to fix: and calculate how much movement you have left and loop)
@@ -381,19 +413,19 @@ void Steve::Update(float deltatime)
 			}
 			else
 			{ //Not perfectly aligned x-wise
-				std::cout << "Not perfect" << std::endl;
+				//std::cout << "Not perfect" << std::endl;
 				//Get b block
 				int b;
 				if (m_x % 64 <= 32){
 					b = m_map->GetPos(((m_x + 31) / 64) + 1, ((m_y + 31) / 64) + 1);
-					std::cout << "x =" << ((m_x + 31) / 64) + 1 << " y = " << ((m_y + 31) / 64) - 1 << " and it is of type:" << b;
+					//std::cout << "x =" << ((m_x + 31) / 64) + 1 << " y = " << ((m_y + 31) / 64) - 1 << " and it is of type:" << b;
 				}
 				else{
 					b = m_map->GetPos(((m_x + 31) / 64) - 1, ((m_y + 31) / 64) + 1);
-					std::cout << "x =" << ((m_x + 31) / 64) - 1 << " y = " << ((m_y + 31) / 64) - 1 << " and it is of type:" << b;
+					//std::cout << "x =" << ((m_x + 31) / 64) - 1 << " y = " << ((m_y + 31) / 64) - 1 << " and it is of type:" << b;
 				}
 
-				std::cout << m_map->GetPos(2, 4);
+				//std::cout << m_map->GetPos(2, 4);
 
 				if (b == 1)
 				{ //B is free
@@ -411,7 +443,7 @@ void Steve::Update(float deltatime)
 				}
 				else
 				{ // B is not free
-					std::cout << "B is NOT free" << std::endl;
+					//std::cout << "B is NOT free" << std::endl;
 					if (m_x % 64 <= 32)
 					{ //A block is to the left. (might be the reverse)
 						if (m_x % 64 - movement < 0)
@@ -439,24 +471,24 @@ void Steve::Update(float deltatime)
 		}
 		else
 		{ //A is blocked
-			std::cout << "c" << std::endl;
+			//std::cout << "c" << std::endl;
 			if (m_x % 64)
 			{ // Perfectly aligned x-wise
 				//Get b block
 				int b;
 				if (m_x % 64 <= 32){
 					b = m_map->GetPos(((m_x + 31) / 64) + 1, ((m_y + 31) / 64) + 1);
-					std::cout << ((m_x + 31) / 64) + 1 << " " << ((m_y + 31) / 64) - 1 << std::endl;
+					//std::cout << ((m_x + 31) / 64) + 1 << " " << ((m_y + 31) / 64) - 1 << std::endl;
 				}
 
 				else{
 					b = m_map->GetPos(((m_x + 31) / 64) - 1, ((m_y + 31) / 64) + 1);
-					std::cout << ((m_x + 31) / 64) - 1 << " " << ((m_y + 31) / 64) - 1 << std::endl;
+					//std::cout << ((m_x + 31) / 64) - 1 << " " << ((m_y + 31) / 64) - 1 << std::endl;
 				}
 
 				if (b == 1)
 				{ //B is free
-					std::cout << "b is free!" << std::endl;
+					//std::cout << "b is free!" << std::endl;
 					if (m_x % 64 <= 32)
 					{ //B block is to the right. (might be the reverse)
 						if (m_x % 64 - movement < 0)
@@ -470,7 +502,7 @@ void Steve::Update(float deltatime)
 					}
 					else
 					{ //B block is to the left
-						std::cout << "shit is to the left go left" << std::endl;
+						//std::cout << "shit is to the left go left" << std::endl;
 						if (m_x % 64 - movement < 0)
 						{ //Snap to the edge (to fix: and calculate how much movement you have left and loop)
 							m_x -= m_x % 64;
@@ -495,10 +527,11 @@ void Steve::Update(float deltatime)
 
 		}
 	}
-	if (m_keyboard->IsKeyDown(SDLK_d)){
+	if (m_last_movement_key == DIR_RIGHT)
+	{
 		if (m_x % 64)
 		{ //y position is not perfectly aligned with grid
-			std::cout << "a" << std::endl;
+			//std::cout << "a" << std::endl;
 			if (m_x % 64 - movement < 0)
 			{ //Will cross grid
 				//Snap to the edge (to fix: and calculate how much movement you have left and loop)
@@ -512,11 +545,11 @@ void Steve::Update(float deltatime)
 		}
 		else if (m_map->GetPos(((m_x + 31) / 64 + 1), ((m_y + 31) / 64)) == 1)
 		{ //Block above is free
-			std::cout << "b" << std::endl;
-			std::cout << !(m_y % 64) << "true?" << std::endl;
+			//std::cout << "b" << std::endl;
+			//std::cout << !(m_y % 64) << "true?" << std::endl;
 			if (!(m_y % 64))
 			{ //Perfectly aligned x-wise
-				std::cout << "perfectly aligned" << std::endl;
+				//std::cout << "perfectly aligned" << std::endl;
 
 				//if (m_x % 64 - movement < 0)
 				//{ //Snap to the edge (to fix: and calculate how much movement you have left and loop)
@@ -529,19 +562,19 @@ void Steve::Update(float deltatime)
 			}
 			else
 			{ //Not perfectly aligned x-wise
-				std::cout << "Not perfect" << std::endl;
+				//std::cout << "Not perfect" << std::endl;
 				//Get b block
 				int b;
 				if (m_y % 64 <= 32){
 					b = m_map->GetPos(((m_x + 31) / 64) + 1, ((m_y + 31) / 64) + 1);
-					std::cout << "x = " << ((m_y + 31) / 64) + 1 << " y = " << ((m_x + 31) / 64) - 1 << " and it is of type:" << b;
+					//std::cout << "x = " << ((m_y + 31) / 64) + 1 << " y = " << ((m_x + 31) / 64) - 1 << " and it is of type:" << b;
 				}
 				else{
 					b = m_map->GetPos(((m_x + 31) / 64) + 1, ((m_y + 31) / 64) - 1);
-					std::cout << "x = " << ((m_y + 31) / 64) - 1 << " y = " << ((m_x + 31) / 64) - 1 << " and it is of type:" << b;
+					//std::cout << "x = " << ((m_y + 31) / 64) - 1 << " y = " << ((m_x + 31) / 64) - 1 << " and it is of type:" << b;
 				}
 
-				std::cout << m_map->GetPos(2, 4);
+				//std::cout << m_map->GetPos(2, 4);
 
 				if (b == 1)
 				{ //B is free
@@ -559,7 +592,7 @@ void Steve::Update(float deltatime)
 				}
 				else
 				{ // B is not free
-					std::cout << "B is NOT free" << std::endl;
+					//std::cout << "B is NOT free" << std::endl;
 					if (m_y % 64 <= 32)
 					{ //A block is to the left. (might be the reverse)
 						if (m_y % 64 - movement < 0)
@@ -587,24 +620,24 @@ void Steve::Update(float deltatime)
 		}
 		else
 		{ //A is blocked
-			std::cout << "c" << std::endl;
+			//std::cout << "c" << std::endl;
 			if (m_y % 64)
 			{ // Perfectly aligned x-wise
 				//Get b block
 				int b;
 				if (m_y % 64 <= 32){
 					b = m_map->GetPos(((m_x + 31) / 64) + 1, ((m_y + 31) / 64) + 1);
-					std::cout << ((m_y + 31) / 64) + 1 << " " << ((m_x + 31) / 64) - 1 << std::endl;
+					//std::cout << ((m_y + 31) / 64) + 1 << " " << ((m_x + 31) / 64) - 1 << std::endl;
 				}
 
 				else{
 					b = m_map->GetPos(((m_x + 31) / 64) + 1, ((m_y + 31) / 64) - 1);
-					std::cout << ((m_y + 31) / 64) - 1 << " " << ((m_x + 31) / 64) - 1 << std::endl;
+					//std::cout << ((m_y + 31) / 64) - 1 << " " << ((m_x + 31) / 64) - 1 << std::endl;
 				}
 
 				if (b == 1)
 				{ //B is free
-					std::cout << "b is free!" << std::endl;
+					//std::cout << "b is free!" << std::endl;
 					if (m_y % 64 <= 32)
 					{ //B block is to the right. (might be the reverse)
 						if (m_y % 64 - movement < 0)
@@ -618,7 +651,7 @@ void Steve::Update(float deltatime)
 					}
 					else
 					{ //B block is to the left
-						std::cout << "shit is to the left go left" << std::endl;
+						//std::cout << "shit is to the left go left" << std::endl;
 						if (m_y % 64 - movement < 0)
 						{ //Snap to the edge (to fix: and calculate how much movement you have left and loop)
 							m_y -= m_y % 64;
