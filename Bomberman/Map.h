@@ -2,6 +2,13 @@
 #ifndef MAP_H_INCLUDED
 #define MAP_H_INCLUDED
 
+enum EBlockType
+{
+	BLOCK_WALL,
+	BLOCK_GRASS,
+	BLOCK_BRICK,
+};
+
 class Map
 {
 public:
@@ -12,6 +19,7 @@ public:
 	int Size();
 	int* GetIntMap();
 	void Print();
+	int GetPos(int x, int y);
 
 private:
 	int* m_int_map;

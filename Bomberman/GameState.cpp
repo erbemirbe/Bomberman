@@ -20,12 +20,11 @@ GameState::GameState(System& system)
 {
 	m_systems = system;
 
-	m_entity_manager = new EntityManager(m_systems.sprite_manager, m_systems.input_manager);
-	m_entities = m_entity_manager->GetActiveEntities();
-
 	MapGenerator* mapGen = new MapGenerator();
-	m_map = mapGen->Gen(9, 7);
+	m_map = mapGen->LoadMap();
 
+	m_entity_manager = new EntityManager(m_systems.sprite_manager, m_systems.input_manager, m_map);
+	m_entities = m_entity_manager->GetActiveEntities();
 	
 	//Create map Entities
 	int* intMap = m_map->GetIntMap();
@@ -33,26 +32,28 @@ GameState::GameState(System& system)
 	{
 		switch (intMap[i])
 		{
-		case 0:
+
+		case BLOCK_WALL:
 			m_entity_manager->MakeEntity(
 				ENTITY_WALL,
 				64 * (i % m_map->GetWidth()),
 				64 * (i / m_map->GetWidth())
 				);
-			break;
-		case 2:
+		break;
+
+		case BLOCK_BRICK:
 			m_entity_manager->MakeEntity(
 				ENTITY_BRICK,
 				64 * (i % m_map->GetWidth()),
 				64 * (i / m_map->GetWidth())
 			);
-			break;
+		break;
 		
 		}
 	}
 	
 	//m_entity_manager->MakeEntity(ENTITY_GRASS, 0, 0);
-	m_entity_manager->MakeEntity(ENTITY_BOMB, 64, 0);
+	//m_entity_manager->MakeEntity(ENTITY_BOMB, 64, 0);
 	m_entity_manager->MakeEntity(ENTITY_STEVE, 0, 0);
 
 	//SpriteText* spritetext = m_systems.sprite_manager->CreateSprite("TTF", 50, "HelloWorld", 100, 100,100);
