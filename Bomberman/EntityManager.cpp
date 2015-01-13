@@ -44,14 +44,14 @@ void EntityManager::MakeEntity(int EntityType, int x, int y)
 		{
 			Sprite* sprite;
 		case ENTITY_BOMB:
-			filename = "../assets/ss_bomberman_minimalistic.png";
-			sprite = m_sprite_manager->CreateSprite(filename, 16, 16, 64, 64);
+			filename = "../assets/bomberman.png";
+			sprite = m_sprite_manager->CreateSprite(filename, 192, 0, 64, 64);
 			entity = new Bomb(sprite, x, y);
 		break;
 
 		case ENTITY_STEVE:
-			filename = "../assets/ss_bomberman_minimalistic.png";
-			sprite = m_sprite_manager->CreateSprite(filename, 00, 00, 64, 64);
+			filename = "../assets/bomberman.png";
+			sprite = m_sprite_manager->CreateSprite(filename, 64, 64, 64, 64);
 			entity = new Steve(m_input_manager->GetKeyboard(), m_map, sprite, x, y);
 		break;
 
