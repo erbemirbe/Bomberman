@@ -1,0 +1,4 @@
+../assets/Bomberman.png
+player1 right 2
+0.2 192 0 64 64
+0.2 192 64 64 64

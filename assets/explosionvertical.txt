@@ -1,0 +1,6 @@
+../assets/Bomberman.png
+explosion vertical 4
+0.1 128 128 64 64
+0.1 128 192 64 64
+0.1 128 256 64 64
+0.1 128 320 64 64
