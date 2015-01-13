@@ -42,32 +42,37 @@ void Steve::Update(float deltatime)
 	if (m_keyboard->IsKeyDownOnce(SDLK_w))
 	{
 		m_last_movement_key2 = m_last_movement_key;
-		 m_last_movement_key = DIR_UP;
+		m_last_movement_key = SDLK_w;
 	}
 	else if (m_keyboard->IsKeyDownOnce(SDLK_a))
 	{
 		m_last_movement_key2 = m_last_movement_key;
-		m_last_movement_key = DIR_LEFT;
+		m_last_movement_key = SDLK_a;
 	}
 	else if (m_keyboard->IsKeyDownOnce(SDLK_s))
 	{
 		m_last_movement_key2 = m_last_movement_key;
-		m_last_movement_key = DIR_DOWN;
+		m_last_movement_key = SDLK_s;
 	}
 	else if (m_keyboard->IsKeyDownOnce(SDLK_d))
 	{
 		m_last_movement_key2 = m_last_movement_key;
-		m_last_movement_key = DIR_RIGHT;
+		m_last_movement_key = SDLK_d;
 	}
 	else
 	{
-		if (!m_keyboard->IsKeyDown(SDLK_w) &&
-			!m_keyboard->IsKeyDown(SDLK_a) &&
-			!m_keyboard->IsKeyDown(SDLK_s) &&
-			!m_keyboard->IsKeyDown(SDLK_d)
-		)
-			m_last_movement_key = DIR_NONE;
+		if (!m_keyboard->IsKeyDown(m_last_movement_key)){
+			if (m_keyboard->IsKeyDown(SDLK_w)
+				|| m_keyboard->IsKeyDown(SDLK_a)
+				|| m_keyboard->IsKeyDown(SDLK_s)
+				|| m_keyboard->IsKeyDown(SDLK_d)
+			)
+				m_last_movement_key = m_last_movement_key2;
+			else
+				m_last_movement_key = 0;
+		}
 	}
+
 	std::cout << m_last_movement_key2 << std::endl;
 
 	int movement = m_speed * deltatime;
@@ -80,7 +85,7 @@ void Steve::Update(float deltatime)
 	}*/
 		
 	//(m_x+31)%64;
-	if (m_last_movement_key == DIR_UP)
+	if (m_last_movement_key == SDLK_w)
 	{
 		if (m_y % 64)
 		{ //y position is not perfectly aligned with grid
@@ -229,7 +234,7 @@ void Steve::Update(float deltatime)
 
 		}
 	}
-	if (m_last_movement_key == DIR_LEFT)
+	if (m_last_movement_key == SDLK_a)
 	{
 		if (m_x % 64)
 		{ //y position is not perfectly aligned with grid
@@ -378,7 +383,7 @@ void Steve::Update(float deltatime)
 
 		}
 	}
-	if (m_last_movement_key == DIR_DOWN)
+	if (m_last_movement_key == SDLK_s)
 	{
 		if (m_y % 64)
 		{ //y position is not perfectly aligned with grid
@@ -527,7 +532,7 @@ void Steve::Update(float deltatime)
 
 		}
 	}
-	if (m_last_movement_key == DIR_RIGHT)
+	if (m_last_movement_key == SDLK_d)
 	{
 		if (m_x % 64)
 		{ //y position is not perfectly aligned with grid
