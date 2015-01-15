@@ -1,5 +1,6 @@
 // stdafx.h 
-
+#ifndef STDAFX_H_INCLUDED
+#define STDAFX_H_INCLUDED
 #pragma once
 
 #include "targetver.h"
@@ -19,3 +20,5 @@
 #pragma comment(lib, "SDL2main.lib")
 #pragma comment(lib, "SDL2_ttf.lib")
 #pragma comment(lib, "SDL2_image.lib")
+
+#endif //STDAFX_H_INCLUDED

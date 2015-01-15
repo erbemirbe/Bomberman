@@ -1,8 +1,8 @@
 //SpriteText.h
-#pragma once
-#include "Sprite.h"
 #ifndef SPRITETEXT_H_INCLUDED
 #define SPRITETEXT_H_INCLUDED
+#pragma once
+#include "Sprite.h"
 
 class SpriteText : public Sprite
 {
