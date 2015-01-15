@@ -13,6 +13,8 @@ enum EEntityType
 	ENTITY_FIRE,
 	ENTITY_WALL,
 	ENTITY_BRICK,
+	ENTITY_FIRE_ROOT,
+	ENTITY_GRASS,
 };
 
 class Sprite;
@@ -33,9 +35,10 @@ public:
 	virtual bool IsActive();
 	virtual void Activate();
 	virtual void Deactivate();
+	virtual void Reset(int x, int y);
+	virtual void Reset() = 0;
 	
 	virtual EEntityType GetType() = 0;
-
 	static EntityManager* m_entity_manager;
 protected:
 	int m_x;

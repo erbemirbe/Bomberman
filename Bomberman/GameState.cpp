@@ -12,6 +12,8 @@
 
 #include "Entity.h"
 
+#include "Fire.h"
+
 #include "Collider.h"
 #include "CollisionManager.h"
 #include "MapGenerator.h"
@@ -26,7 +28,8 @@ GameState::GameState(System& system)
 	m_entity_manager = new EntityManager(m_systems.sprite_manager, m_systems.input_manager, m_map);
 	m_entities = m_entity_manager->GetActiveEntities();
 	
-	//Create map Entities
+	//Create map Entities'
+	/*
 	int* intMap = m_map->GetIntMap();
 	for (int i = 0; i < m_map->Size(); i++)
 	{
@@ -51,65 +54,19 @@ GameState::GameState(System& system)
 		
 		}
 	}
-	
-	//m_entity_manager->MakeEntity(ENTITY_GRASS, 0, 0);
+	*/
+	m_entity_manager->MakeEntity(ENTITY_WALL, 0, 0);
+	m_entity_manager->MakeEntity(ENTITY_GRASS, 0, 0);
+	m_entity_manager->MakeEntity(ENTITY_BRICK, 0, 0);
 	//m_entity_manager->MakeEntity(ENTITY_BOMB, 64, 0);
 	m_entity_manager->MakeEntity(ENTITY_STEVE, 0, 0);
+	
+
+//	m_entity_manager->MakeEntity(ENTITY_FIRE, 120, 300);
+	//m_entity_manager->MakeEntity(ENTITY_FIRE, 300, 100);
 
 	//SpriteText* spritetext = m_systems.sprite_manager->CreateSprite("TTF", 50, "HelloWorld", 100, 100,100);
 
-	//create Steve
-	/*sprite* sprite = m_systems.sprite_manager->createsprite(filename, 0, 0, 80, 16);
-	steve* steve = new steve(
-		m_systems.input_manager->getmouse(),
-		sprite,
-		m_systems.width,
-		m_systems.height);
-	m_entities.push_back(steve);*/
-
-	//create ball
-	/*
-	Sprite* sprite = m_systems.sprite_manager->CreateSprite(filename, 82, 0, 16, 16);
-	Ball* ball = new Ball(sprite,
-		m_systems.width,
-		m_systems.height,
-		m_systems.width / 2 - 8, 
-		m_systems.height - 68 - 16);
-	m_entities.push_back(ball);
-	*/
-
-	// hard coded block coordinates
-	/*SDL_Rect blockCoords[] =
-	{
-		{ 100,  0, 40, 16 }, // green
-		{ 143,  0, 40, 16 }, // red
-		{ 185,  0, 40, 16 }, // 
-		{ 100, 18, 40, 16 }, // purple
-		{ 143, 18, 40, 16 }, // blue
-		{ 185, 18, 40, 16 }, // yellow
-		{ 100, 36, 40, 16 }, // orange
-	};*/
-
-	// create all blocks for level
-	/*int padding = 4;
-	int xNumBlocks = m_systems.width / (40 + padding);
-	int yNumBlocks = 16;
-	int xOffset = (m_systems.width % (40 + padding)) / 2;
-	int yOffset = xOffset;
-
-	for (int y = 0; y < yNumBlocks; y++)
-	{
-		for (int x = 0; x < xNumBlocks; x++)
-		{
-			SDL_Rect& rect = blockCoords[rand() % 7];
-			sprite = m_systems.sprite_manager->CreateSprite(
-				filename, rect.x, rect.y, rect.w, rect.h);
-			Block* block = new Block(sprite, 
-				(padding / 2) + xOffset + x * 40 + x * padding,
-				yOffset + y * 16 + y * padding);
-			m_entities.push_back(block);
-		}
-	}*/
 
 	m_active = false;
 
@@ -205,7 +162,18 @@ bool GameState::Update(float deltatime)
 
 void GameState::Draw()
 {
-	for (unsigned int i = 0; i < m_entities->size(); i++)
+	int* intMap = m_map->GetIntMap();
+
+	for (int y = 0; y < m_map->GetHeight(); y++){
+		for (int x = 0; x < m_map->GetWidth(); x++){
+			Sprite* sprite = (*m_entities)[m_map->GetPos(x, y)]->GetSprite();
+			if (sprite)
+			{
+				m_systems.draw_manager->Draw(sprite, x * 64, y * 64);
+			}
+		}
+	}
+	for (unsigned int i = 3; i < m_entities->size(); i++)
 	{
 		if (!(*m_entities)[i]->IsVisible())
 			continue;

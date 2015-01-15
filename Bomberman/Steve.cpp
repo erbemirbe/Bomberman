@@ -1,22 +1,27 @@
 // Steve.cpp
 
 #include "stdafx.h"
+#include "Steve.h"
+
 
 #include "Sprite.h"
 #include "Keyboard.h"
+#include "EntityManager.h"
 #include "Collider.h"
 #include "Map.h"
-#include "Steve.h"
+#include "Bomb.h"
+
 #include <iostream>
 
 
-Steve::Steve(Keyboard* keyboard, Map* map, Sprite* sprite, int x, int y)
+Steve::Steve(Keyboard* keyboard, EntityManager* entityManager, Map* map, Sprite* sprite, int x, int y)
 {
 	m_keyboard = keyboard;
 	m_sprite = sprite;
+	m_entity_manager = entityManager;
 
 	m_collider = new Collider(0, 0);
-	m_collider->SetWidthHeight(m_sprite->GetRegion()->w, 
+	m_collider->SetWidthHeight(m_sprite->GetRegion()->w,
 		m_sprite->GetRegion()->h);
 	m_map = map;
 
@@ -39,6 +44,7 @@ Steve::~Steve()
 
 void Steve::Update(float deltatime)
 {
+
 	if (m_keyboard->IsKeyDownOnce(SDLK_w))
 	{
 		m_last_movement_key2 = m_last_movement_key;
@@ -73,9 +79,10 @@ void Steve::Update(float deltatime)
 		}
 	}
 
-	std::cout << m_last_movement_key2 << std::endl;
+	if (m_keyboard->IsKeyDownOnce(SDLK_v)) LayBomb();
 
 	int movement = m_speed * deltatime;
+
 
 	/* Testing key
 	if (m_keyboard->IsKeyDown(SDLK_f)){
@@ -680,8 +687,6 @@ void Steve::Update(float deltatime)
 			}
 		}
 	}
-	if (m_keyboard->IsKeyDown(SDLK_v)) LayBomb();
-	//move();
 }
 
 void move(){
@@ -787,9 +792,21 @@ void Steve::LayBomb()
 {
 	if (m_bombs < m_max_bombs)
 	{
-		m_y++;
+		Bomb* bomb =(Bomb*) m_entity_manager->MakeEntity(
+			ENTITY_BOMB,
+			(m_x + 32) / 64,
+			(m_y + 32) / 64
+		);
+		bomb->SetOwner(this);
+		m_bombs++;
 	}
 }
+
+void Steve::ReturnBomb()
+{
+	m_bombs--;
+}
+
 
 Sprite* Steve::GetSprite()
 {

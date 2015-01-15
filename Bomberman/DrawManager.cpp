@@ -17,7 +17,7 @@ DrawManager::~DrawManager()
 
 bool DrawManager::Initialize(int width, int height)
 {
-	m_window = SDL_CreateWindow("Arkanoid",
+	m_window = SDL_CreateWindow("Bomber Steve",
 		SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
 		width, height, SDL_WINDOW_OPENGL);
 	if (m_window == nullptr)

@@ -7,6 +7,8 @@ enum EBlockType
 	BLOCK_WALL,
 	BLOCK_GRASS,
 	BLOCK_BRICK,
+	BLOCK_FIRE,
+	BLOCK_BOMB,
 };
 
 class Map
@@ -20,6 +22,7 @@ public:
 	int* GetIntMap();
 	void Print();
 	int GetPos(int x, int y);
+	void SetPos(int x, int y, int val);
 
 private:
 	int* m_int_map;

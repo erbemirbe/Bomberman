@@ -1,5 +1,7 @@
+//Wall.cpp
 #include "stdafx.h"
 #include "Wall.h"
+
 #include "Collider.h"
 #include "Sprite.h"
 

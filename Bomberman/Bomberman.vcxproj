@@ -94,7 +94,9 @@
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EntityManager.h" />
     <ClInclude Include="Fire.h" />
+    <ClInclude Include="FireRoot.h" />
     <ClInclude Include="GameState.h" />
+    <ClInclude Include="Grass.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="Map.h" />
@@ -125,7 +127,9 @@
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EntityManager.cpp" />
     <ClCompile Include="Fire.cpp" />
+    <ClCompile Include="FireRoot.cpp" />
     <ClCompile Include="GameState.cpp" />
+    <ClCompile Include="Grass.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="Map.cpp" />

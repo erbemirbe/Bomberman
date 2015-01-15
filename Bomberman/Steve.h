@@ -5,8 +5,10 @@
 
 #include "Entity.h"
 
-class Keybaord;
+class Keyboard;
+class EntityManager;
 class Map;
+
 
 enum EDirection
 {
@@ -20,13 +22,14 @@ enum EDirection
 class Steve : public Entity
 {
 public:
-	Steve(Keyboard* keyboard, Map* map, Sprite* sprite, int width, int height);
+	Steve(Keyboard* keyboard, EntityManager* entityManager, Map* map, Sprite* sprite, int width, int height);
 	~Steve();
 	
 	void Update(float deltatime);
 	Sprite* GetSprite();
 
 	void Reset();
+	void ReturnBomb();
 
 	bool IsVisible();
 	EEntityType GetType();
@@ -35,6 +38,7 @@ public:
 private:
 	Keyboard* m_keyboard;
 	Sprite* m_sprite;
+	EntityManager* m_entity_manager;
 	Collider* m_collider;
 	Map* m_map;
 

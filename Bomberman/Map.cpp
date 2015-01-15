@@ -27,8 +27,14 @@ int Map::GetHeight()
 	return m_height;
 }
 
-int Map::GetPos(int x, int y){
+int Map::GetPos(int x, int y)
+{
 	return m_int_map[y * m_width + x];
+}
+
+void Map::SetPos(int x, int y, int val)
+{
+	m_int_map[y * m_width + x] = val;
 }
 
 int Map::Size()

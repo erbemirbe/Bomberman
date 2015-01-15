@@ -14,13 +14,13 @@ public:
 	~EntityManager();
 
 	std::vector<Entity*>* GetActiveEntities();
-	void MakeEntity( int  EntityType , int x , int y);
-	void RecycleEntity();
+	Entity* MakeEntity( int  EntityType , int x , int y);
+	void RecycleEntity(Entity*);
 private:
 	SpriteManager*						m_sprite_manager;
 	InputManager*						m_input_manager;
 	Map*								m_map;
 	std::vector<Entity*>				m_active_entities;
-	std::map<int, std::vector<Entity*>> m_inactive_entities;
+	std::map<int, std::vector<Entity*>*> m_inactive_entities;
 };
 #endif //ENTITYMANAGER_H_INCLUDED

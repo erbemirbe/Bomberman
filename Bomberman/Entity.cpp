@@ -31,3 +31,9 @@ bool Entity::IsActive()
 {
 	return m_active;
 }
+void Entity::Reset(int x, int y)
+{
+	m_x = x;
+	m_y = y;
+	Reset();
+}
