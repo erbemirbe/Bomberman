@@ -18,6 +18,10 @@
 #include "CollisionManager.h"
 #include "MapGenerator.h"
 #include "Map.h"
+
+#include "SoundManager.h"
+#include "MusicClip.h"
+#include "SoundClip.h"
 GameState::GameState(System& system)
 {
 	m_systems = system;
@@ -25,7 +29,10 @@ GameState::GameState(System& system)
 	MapGenerator* mapGen = new MapGenerator();
 	m_map = mapGen->LoadMap();
 
-	m_entity_manager = new EntityManager(m_systems.sprite_manager, m_systems.input_manager, m_map);
+	SoundClip* Shitpointer = m_systems.sound_manager->CreateSoundClip("../assets/bomb.mp3");
+	Shitpointer->Play();
+
+	m_entity_manager = new EntityManager(m_systems.sprite_manager, m_systems.input_manager, m_map, m_systems.sound_manager);
 	m_entities = m_entity_manager->GetActiveEntities();
 	
 	//Create map Entities'
@@ -70,10 +77,14 @@ GameState::GameState(System& system)
 
 	m_active = false;
 
+	m_background_music = m_systems.sound_manager->CreateMusicClip("../assets/multiplayer.mid");
+	m_background_music->Play();
 }
 
 GameState::~GameState()
 {
+	delete m_background_music;
+
 	int c = 0;
 	auto it = m_entities->begin();
 	while (it != m_entities->end())

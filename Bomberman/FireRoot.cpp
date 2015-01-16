@@ -8,19 +8,23 @@
 #include "map.h"
 #include "EntityManager.h"
 
+#include "SoundClip.h"
+
 #include "Fire.h"
 
 #include <iostream>
 
-FireRoot::FireRoot(Sprite* sprite, Map* map, EntityManager* entityManager, int x, int y)
+FireRoot::FireRoot(Sprite* sprite, Map* map, EntityManager* entityManager, SoundClip* sound, int x, int y)
 {
 	m_sprite = sprite;
 	m_map = map;
 	m_entity_manager = entityManager;
+	m_sound = sound;
 
 	m_x = x;
 	m_y = y;
 	m_time = 0.5f;
+	m_sound->Play();
 }
 
 void FireRoot::SetBlastRange(int blastRange){

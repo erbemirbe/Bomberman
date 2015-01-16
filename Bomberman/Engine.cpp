@@ -5,6 +5,9 @@
 #include "DrawManager.h"
 #include "SpriteManager.h"
 #include "StateManager.h"
+#include "SoundManager.h"
+
+#include "MenuState.h"
 #include "GameState.h"
 #include "Engine.h"
 
@@ -44,17 +47,17 @@ bool Engine::Initialize()
 	m_input_manager = new InputManager;
 	m_sprite_manager = new SpriteManager(m_draw_manager->GetRenderer());
 	m_state_manager = new StateManager;
-
-
-	
+	m_sound_manager = new SoundManager;
+	m_sound_manager->Initialize();
 	System system;
 	system.width = width;
 	system.height = height;
 	system.draw_manager = m_draw_manager;
 	system.input_manager = m_input_manager;
 	system.sprite_manager = m_sprite_manager;
-	m_state_manager->SetState(new GameState(system));
-
+	system.sound_manager = m_sound_manager;
+	m_state_manager->SetState(new MenuState(system));
+	
 	return true;
 }
 
@@ -78,7 +81,6 @@ void Engine::Shutdown()
 		m_draw_manager = nullptr;
 	}
 		
-
 	IMG_Quit();
 	TTF_Quit();
 	SDL_Quit();
@@ -114,11 +116,12 @@ void Engine::HandleEvents()
 		{
 		case SDL_QUIT:
 			m_running = false;
-			break;
+		break;
 
 		case SDL_MOUSEMOTION:
 			m_input_manager->SetMousePosition(event.motion.x, event.motion.y);
-			break;
+		break;
+
 		case SDL_MOUSEBUTTONDOWN:
 		{
 			int index = event.button.button - 1;
@@ -128,7 +131,8 @@ void Engine::HandleEvents()
 				index = 2;
 			m_input_manager->SetMouseButton(index, true);
 		}
-			break;
+		break;
+
 		case SDL_MOUSEBUTTONUP:
 		{
 			int index = event.button.button - 1;
@@ -138,17 +142,17 @@ void Engine::HandleEvents()
 				index = 2;
 			m_input_manager->SetMouseButton(index, false);
 		}
-			break;
+		break;
 
 		case SDL_KEYDOWN:
 			if (event.key.keysym.sym < 256)
 			m_input_manager->SetKeyboard(event.key.keysym.sym, true);
+		break;
 
-			break;
 		case SDL_KEYUP:
 			if (event.key.keysym.sym < 256)
 			m_input_manager->SetKeyboard(event.key.keysym.sym, false);
-			break;
+		break;
 		}
 	}
 }

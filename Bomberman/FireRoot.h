@@ -5,11 +5,12 @@
 #include "entity.h"
 
 class Map;
+class SoundClip;
 
 class FireRoot :public Entity
 {
 public:
-	FireRoot(Sprite* sprite, Map* map, EntityManager* entityManager, int x, int y);
+	FireRoot(Sprite* sprite, Map* map, EntityManager* entityManager, SoundClip* sound, int x, int y);
 	~FireRoot();
 
 	void Reset();
@@ -31,6 +32,7 @@ private:
 	Map* m_map;
 	Collider* m_collider;
 	EntityManager* m_entity_manager;
+	SoundClip* m_sound;
 
 };
 

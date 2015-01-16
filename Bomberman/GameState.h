@@ -9,7 +9,8 @@ class Entity;
 class EntityManager;
 class MapGenerator;
 class Map;
-
+class MusicClip;
+class SoundClip;
 class GameState : public State
 {
 public:
@@ -29,6 +30,7 @@ private:
 	std::vector<Entity*>*	m_entities;
 	Map*					m_map;
 	bool					m_active;
+	MusicClip*				m_background_music;
 };
 
 #endif // GAMESTATE_H_INCLUDED

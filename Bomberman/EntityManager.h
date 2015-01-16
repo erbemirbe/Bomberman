@@ -5,12 +5,13 @@
 class Entity;
 class SpriteManager;
 class InputManager;
+class SoundManager;
 class Map;
 
 class EntityManager
 {
 public:
-	EntityManager(SpriteManager* spriteManager, InputManager* spriteMan, Map* map);
+	EntityManager(SpriteManager* spriteManager, InputManager* spriteMan, Map* map, SoundManager* soundManager);
 	~EntityManager();
 
 	std::vector<Entity*>* GetActiveEntities();
@@ -22,5 +23,6 @@ private:
 	Map*								m_map;
 	std::vector<Entity*>				m_active_entities;
 	std::map<int, std::vector<Entity*>*> m_inactive_entities;
+	SoundManager*						m_sound_manager;
 };
 #endif //ENTITYMANAGER_H_INCLUDED

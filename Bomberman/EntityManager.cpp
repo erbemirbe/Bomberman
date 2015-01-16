@@ -5,6 +5,7 @@
 
 #include "SpriteManager.h"
 #include "InputManager.h"
+#include "SoundManager.h"
 #include "Map.h"
 
 #include "Bomb.h"
@@ -19,10 +20,11 @@
 #include <vector>
 #include <iostream>
 
-EntityManager::EntityManager(SpriteManager* spriteManager, InputManager* inputManager, Map* map)
+EntityManager::EntityManager(SpriteManager* spriteManager, InputManager* inputManager, Map* map, SoundManager* soundManager)
 {
 	m_sprite_manager = spriteManager;
 	m_input_manager = inputManager;
+	m_sound_manager = soundManager;
 	m_map = map;
 }
 
@@ -38,8 +40,8 @@ std::vector<Entity*>* EntityManager::GetActiveEntities()
 
 Entity* EntityManager::MakeEntity(int EntityType, int x, int y)
 {
-	std::cout << "creating something" << std::endl;
 	Entity* entity;
+	SoundClip* sound;
 	auto it = m_inactive_entities.find(EntityType);
 	if (it == m_inactive_entities.end())
 	{
@@ -74,7 +76,8 @@ Entity* EntityManager::MakeEntity(int EntityType, int x, int y)
 		case ENTITY_FIRE_ROOT:
 			filename = "../assets/Bomberman.png";
 			sprite = m_sprite_manager->CreateSprite(filename, 64, 320, 64, 64);
-			entity = new FireRoot(sprite, m_map, this, x, y);
+			sound = m_sound_manager->CreateSoundClip("../assets/bomb.mp3");
+			entity = new FireRoot(sprite, m_map, this, sound , x, y);
 		break;
 		case ENTITY_FIRE:
 			filename = "../assets/Bomberman.png";

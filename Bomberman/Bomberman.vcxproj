@@ -52,12 +52,12 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../external/sdl2/include;../external/sdl2_ttf/include;../external/sdl2_image/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../external/sdl2/include;../external/SDL2_ttf/include;../external/SDL2_image/include;../external/SDL2_mixer/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>../external/sdl2/lib/x86/;../external/sdl2_ttf/lib/x86/;../external/sdl2_image/lib/x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../external/sdl2/lib/x86/;../external/SDL2_ttf/lib/x86/;../external/SDL2_image/lib/x86;../external/SDL2_mixer/lib/x86/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -69,14 +69,14 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../external/sdl2/include;../external/sdl2_ttf/include;../external/sdl2_image/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../external/sdl2/include;../external/SDL2_ttf/include;../external/SDL2_image/include;../external/SDL2_mixer/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>../external/sdl2/lib/x86/;../external/sdl2_ttf/lib/x86/;../external/sdl2_image/lib/x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../external/sdl2/lib/x86/;../external/SDL2_ttf/lib/x86/;../external/SDL2_image/lib/x86;../external/SDL2_mixer/lib/x86/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -87,6 +87,7 @@
     <ClInclude Include="Block.h" />
     <ClInclude Include="Bomb.h" />
     <ClInclude Include="Brick.h" />
+    <ClInclude Include="Button.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="DrawManager.h" />
@@ -101,7 +102,11 @@
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="MapGenerator.h" />
+    <ClInclude Include="MenuState.h" />
     <ClInclude Include="Mouse.h" />
+    <ClInclude Include="MusicClip.h" />
+    <ClInclude Include="SoundClip.h" />
+    <ClInclude Include="SoundManager.h" />
     <ClInclude Include="Steve.h" />
     <ClInclude Include="Particle.h" />
     <ClInclude Include="Resource.h" />
@@ -120,6 +125,7 @@
     <ClCompile Include="Bomb.cpp" />
     <ClCompile Include="Bomberman.cpp" />
     <ClCompile Include="Brick.cpp" />
+    <ClCompile Include="Button.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="DrawManager.cpp" />
@@ -134,7 +140,11 @@
     <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MapGenerator.cpp" />
+    <ClCompile Include="MenuState.cpp" />
     <ClCompile Include="Mouse.cpp" />
+    <ClCompile Include="MusicClip.cpp" />
+    <ClCompile Include="SoundClip.cpp" />
+    <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="Steve.cpp" />
     <ClCompile Include="particle.cpp" />
     <ClCompile Include="Sprite.cpp" />
