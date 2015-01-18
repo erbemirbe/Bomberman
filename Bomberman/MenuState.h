@@ -18,15 +18,14 @@ public:
 	State* NextState();
 
 private:
-	bool m_active;
-	System m_system;
-	State* m_next_state;
-	Mouse* m_mouse;
+	System	m_system;
+	bool	m_active;
+	State*	m_next_state;
+	Mouse*	m_mouse;
 
-	
-	Sprite* m_background;
+	Sprite*				 m_background;
 	std::vector<Button*> m_buttons;
-	MusicClip* m_background_music;
+	MusicClip*			 m_background_music;
 	
 };
 #endif //MENUSTATE_H_INCLUDED

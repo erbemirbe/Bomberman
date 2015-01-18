@@ -7,14 +7,24 @@
 #include <iostream>
 Fire::Fire(Sprite* sprite, Map* map, EntityManager* entityManager, int x, int y)
 {
-
-	std::cout << "I exist" << std::endl;
 	m_sprite = sprite;
 	m_map = map;
 	m_entity_manager = entityManager;
-	m_time = 0.5f;
 	m_x = x;
 	m_y = y;
+	Reset();
+}
+
+void Fire::Reset()
+{
+	m_time = .5f;
+
+	if (m_map->GetPos(m_x/64,m_y/64) == BLOCK_BRICK)
+		m_power_up = true;
+	else
+		m_power_up = false;
+	
+	m_map->SetPos(m_x / 64, m_y / 64, BLOCK_FIRE);
 }
 
 
@@ -51,6 +61,10 @@ void Fire::Blast(int xGrid, int yGrid, int dir)
 	switch (m_map->GetPos(xGrid, yGrid))
 	{
 		case BLOCK_GRASS:
+		case BLOCK_BOMB:
+		case BLOCK_PWRUP_BOMB:
+		case BLOCK_PWRUP_FIRE:
+		case BLOCK_PWRUP_SPEED:
 		{
 			Fire* fire = (Fire*)m_entity_manager->MakeEntity(ENTITY_FIRE, xGrid * 64, yGrid * 64);
 			fire->SetBlastRangeAndDirection(m_blast_range - 1, dir);
@@ -65,9 +79,9 @@ void Fire::Blast(int xGrid, int yGrid, int dir)
 	}
 }
 
-void Fire::Reset()
+void Fire::PowerUp()
 {
-	m_time = 0.5f;
+	m_power_up = true;
 }
 
 bool Fire::IsVisible()
@@ -92,13 +106,26 @@ void Fire::SetPosition(int x, int y)
 	m_collider->Refresh();
 }
 
-
-
 void Fire::Update(float deltatime)
 {
 	m_time -= deltatime;
-	if (m_time < 0){
-		m_map->SetPos(m_x / 64, m_y / 64, 1);
+	if (m_time < 0)
+	{
+		if (m_power_up)
+		{
+			if (rand() % 5 == 1)
+			{
+				switch (rand() % 3)
+				{
+					case 0: m_map->SetPos(m_x / 64, m_y / 64, BLOCK_PWRUP_FIRE);	break;
+					case 1: m_map->SetPos(m_x / 64, m_y / 64, BLOCK_PWRUP_SPEED);	break;
+					case 2: m_map->SetPos(m_x / 64, m_y / 64, BLOCK_PWRUP_BOMB);	break;
+				}
+			}
+			else m_map->SetPos(m_x / 64, m_y / 64, BLOCK_GRASS);
+		}
+		else m_map->SetPos(m_x / 64, m_y / 64, BLOCK_GRASS);
+
 		m_entity_manager->RecycleEntity(this);
 	}
 }

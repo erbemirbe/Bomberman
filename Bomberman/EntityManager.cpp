@@ -8,6 +8,7 @@
 #include "SoundManager.h"
 #include "Map.h"
 
+//Entities
 #include "Bomb.h"
 #include "Steve.h"
 #include "Block.h"
@@ -17,7 +18,7 @@
 #include "FireRoot.h"
 #include "Grass.h"
 
-#include <vector>
+//#include <vector>
 #include <iostream>
 
 EntityManager::EntityManager(SpriteManager* spriteManager, InputManager* inputManager, Map* map, SoundManager* soundManager)
@@ -42,6 +43,7 @@ Entity* EntityManager::MakeEntity(int EntityType, int x, int y)
 {
 	Entity* entity;
 	SoundClip* sound;
+	std::map < int, int > controls;
 	auto it = m_inactive_entities.find(EntityType);
 	if (it == m_inactive_entities.end())
 	{
@@ -53,13 +55,30 @@ Entity* EntityManager::MakeEntity(int EntityType, int x, int y)
 		case ENTITY_BOMB:
 			filename = "../assets/bomberman.png";
 			sprite = m_sprite_manager->CreateSprite(filename, 128, 0, 64, 64);
-			entity = new Bomb(sprite, this, x, y);
+			entity = new Bomb(sprite, this, m_map, x, y);
 		break;
 
 		case ENTITY_STEVE:
 			filename = "../assets/bomberman.png";
 			sprite = m_sprite_manager->CreateSprite(filename, 64, 64, 64, 64);
-			entity = new Steve(m_input_manager->GetKeyboard(), this, m_map, sprite, x, y);
+			
+			controls.insert( std::pair<int, int >( KEY_UP,		SDLK_w));
+			controls.insert( std::pair<int, int >( KEY_LEFT,	SDLK_a));
+			controls.insert( std::pair<int, int >(KEY_DOWN,		SDLK_s));
+			controls.insert( std::pair<int, int >( KEY_RIGHT,	SDLK_d));
+			controls.insert( std::pair<int, int >( KEY_BOMB,	SDLK_f));
+			entity = new Steve(m_input_manager->GetKeyboard(), this, m_map, sprite, &controls,  x, y);
+		break;
+
+		case ENTITY_STEVE2:
+			filename = "../assets/bomberman.png";
+			sprite = m_sprite_manager->CreateSprite(filename, 6 * 64, 4 * 64, 64, 64);
+			controls.insert(std::pair<int, int >(KEY_UP,	SDLK_i));
+			controls.insert(std::pair<int, int >(KEY_LEFT,	SDLK_j));
+			controls.insert(std::pair<int, int >(KEY_DOWN,	SDLK_k));
+			controls.insert(std::pair<int, int >(KEY_RIGHT,	SDLK_l));
+			controls.insert(std::pair<int, int >(KEY_BOMB,	SDLK_h));
+			entity = new Steve(m_input_manager->GetKeyboard(), this, m_map, sprite, &controls, x, y);
 		break;
 
 		case ENTITY_BRICK:
@@ -73,21 +92,44 @@ Entity* EntityManager::MakeEntity(int EntityType, int x, int y)
 			sprite = m_sprite_manager->CreateSprite(filename, 0, 0, 64, 64);
 			entity = new Wall(sprite, x, y);
 		break;
+
 		case ENTITY_FIRE_ROOT:
 			filename = "../assets/Bomberman.png";
 			sprite = m_sprite_manager->CreateSprite(filename, 64, 320, 64, 64);
-			sound = m_sound_manager->CreateSoundClip("../assets/bomb.mp3");
+			sound = m_sound_manager->CreateSoundClip("../assets/bomb.wav");
 			entity = new FireRoot(sprite, m_map, this, sound , x, y);
 		break;
+
 		case ENTITY_FIRE:
 			filename = "../assets/Bomberman.png";
 			sprite = m_sprite_manager->CreateSprite(filename, 128, 320, 64, 64);
 			entity = new Fire(sprite, m_map, this, x, y);
 		break;
+
 		case ENTITY_GRASS:
 			filename = "../assets/Bomberman.png";
 			sprite = m_sprite_manager->CreateSprite(filename, 0, 64, 64, 64);
 			entity = new Grass(sprite, x, y);
+		break;
+
+		case ENTITY_PWRUP_FIRE:
+			filename = "../assets/Bomberman.png";
+			sprite = m_sprite_manager->CreateSprite(filename, 4 * 64, 3 * 64, 64, 64);
+			entity = new Grass(sprite, x, y);
+		break;
+
+		case ENTITY_PWRUP_SPEED:
+			filename = "../assets/Bomberman.png";
+			sprite = m_sprite_manager->CreateSprite(filename, 4 * 64, 4 * 64, 64, 64);
+			entity = new Grass(sprite, x, y);
+		break;
+		case ENTITY_PWRUP_BOMB:
+			filename = "../assets/Bomberman.png";
+			sprite = m_sprite_manager->CreateSprite(filename, 4 * 64, 5 * 64, 64, 64);
+			entity = new Grass(sprite, x, y);
+		break;
+
+		
 		}
 	}
 	else

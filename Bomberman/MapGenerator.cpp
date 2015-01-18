@@ -16,6 +16,7 @@ MapGenerator::MapGenerator()
 
 Map* MapGenerator::LoadMap()
 {
+	Map* map = nullptr;
 	std::ifstream stream;
 	stream.open("CoolFile.txt");
 
@@ -37,24 +38,28 @@ Map* MapGenerator::LoadMap()
 			stream >> intMap[i];
 				i++;
 		}
-		return new Map(intMap, width, height);
+		map = new Map(intMap, width, height);
 	}
+
 	stream.close();
+	return map;
 }
 
 Map* MapGenerator::Gen( int width, int height)
 {
 
-	width = 2 * width + 1;
-	height = 2 * height + 1;
+	//width = 2 * width + 1;
+	//height = 2 * height + 1;
 	int* intMap = new int[width * height];
 	
 	for (int y = 0; y < height; y++)
 	{
 		for (int x = 0; x < width; x++)
 		{
-			if (x % 2 == 1 && y % 2) intMap[y * width + x] = 0; 
-			else intMap[y * width + x] = 1 + rand()%2;
+			if (x % 2 == 1 && y % 2)
+				intMap[y * width + x] = 0; 
+			else
+				intMap[y * width + x] = 1 + rand() % 2;
 		}
 	}
 
@@ -62,6 +67,11 @@ Map* MapGenerator::Gen( int width, int height)
 	intMap[0 * width + 0] = 1;
 	intMap[1 * width + 0] = 1;
 	intMap[0 * width + 1] = 1;
+
+	//empty right bottom corner
+	intMap[(height - 1) * width	+ width - 1] = 1;
+	intMap[(height - 2) * width + width - 1] = 1;
+	intMap[(height - 1) * width	+ width - 2] = 1;
 
 	return new Map(intMap, width, height);
 }

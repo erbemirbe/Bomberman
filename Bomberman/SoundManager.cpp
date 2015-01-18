@@ -15,7 +15,7 @@ SoundManager::~SoundManager()
 
 bool SoundManager::Initialize()
 {
-	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
+	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 4, 2048) < 0)
 	{
 		printf(" SDL_mixer :: Msx_OpenAudio %s\n", Mix_GetError());
 		return false;

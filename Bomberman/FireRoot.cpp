@@ -1,17 +1,12 @@
 //FireRootRoot.cpp
 #include "stdafx.h"
 #include "FireRoot.h"
-
-
 #include "Collider.h"
 #include "Sprite.h"
 #include "map.h"
 #include "EntityManager.h"
-
 #include "SoundClip.h"
-
 #include "Fire.h"
-
 #include <iostream>
 
 FireRoot::FireRoot(Sprite* sprite, Map* map, EntityManager* entityManager, SoundClip* sound, int x, int y)
@@ -23,23 +18,26 @@ FireRoot::FireRoot(Sprite* sprite, Map* map, EntityManager* entityManager, Sound
 
 	m_x = x;
 	m_y = y;
+	Reset();
+}
+
+void FireRoot::Reset()
+{
 	m_time = 0.5f;
 	m_sound->Play();
 }
 
 void FireRoot::SetBlastRange(int blastRange){
-	std::cout << "what is blast range? " << blastRange << std::endl;
 	m_blast_range = blastRange;
 	Init();
 }
 
 void FireRoot::Init()
 {
-	std::cout << "INIT" << std::endl;
 	int gridX = m_x / 64;
 	int gridY = m_y / 64;
 
-	m_map->SetPos(gridX, gridY, 3);
+	m_map->SetPos(gridX, gridY, BLOCK_FIRE);
 
 
 	if (m_blast_range <= 0)
@@ -49,21 +47,23 @@ void FireRoot::Init()
 	Blast(gridX + 1, gridY, FIRE_RIGHT);
 	Blast(gridX, gridY - 1, FIRE_UP);
 	Blast(gridX, gridY + 1, FIRE_DOWN);
-	std::cout << "WTF?" << std::endl;
 }
 
 void FireRoot::Blast(int xGrid, int yGrid, int dir)
 {
-	std::cout << "Fire Root is blasting" << dir << std::endl;
 	if (xGrid < 0 || yGrid < 0
 		|| xGrid > m_map->GetWidth()
 		|| yGrid > m_map->GetHeight()
 	) return;
-	
 
 	switch (m_map->GetPos(xGrid, yGrid))
 	{
-		case BLOCK_GRASS:
+		
+	case BLOCK_GRASS:
+	case BLOCK_BOMB:
+	case BLOCK_PWRUP_BOMB:
+	case BLOCK_PWRUP_FIRE:
+	case BLOCK_PWRUP_SPEED:
 		{
 			Fire* fire = (Fire*)m_entity_manager->MakeEntity(ENTITY_FIRE, xGrid*64, yGrid*64);
 			fire->SetBlastRangeAndDirection(m_blast_range - 1, dir);
@@ -82,11 +82,6 @@ void FireRoot::Blast(int xGrid, int yGrid, int dir)
 FireRoot::~FireRoot()
 {
 
-}
-
-void FireRoot::Reset()
-{
-	m_time = 0.5f;
 }
 
 bool FireRoot::IsVisible()

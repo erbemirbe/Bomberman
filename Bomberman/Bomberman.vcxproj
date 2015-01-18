@@ -105,6 +105,7 @@
     <ClInclude Include="MenuState.h" />
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="MusicClip.h" />
+    <ClInclude Include="PwrupFire.h" />
     <ClInclude Include="SoundClip.h" />
     <ClInclude Include="SoundManager.h" />
     <ClInclude Include="Steve.h" />

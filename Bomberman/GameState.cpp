@@ -27,10 +27,9 @@ GameState::GameState(System& system)
 	m_systems = system;
 
 	MapGenerator* mapGen = new MapGenerator();
-	m_map = mapGen->LoadMap();
+	//m_map = mapGen->LoadMap();
+	m_map = mapGen->Gen(19,15);
 
-	SoundClip* Shitpointer = m_systems.sound_manager->CreateSoundClip("../assets/bomb.mp3");
-	Shitpointer->Play();
 
 	m_entity_manager = new EntityManager(m_systems.sprite_manager, m_systems.input_manager, m_map, m_systems.sound_manager);
 	m_entities = m_entity_manager->GetActiveEntities();
@@ -65,8 +64,12 @@ GameState::GameState(System& system)
 	m_entity_manager->MakeEntity(ENTITY_WALL, 0, 0);
 	m_entity_manager->MakeEntity(ENTITY_GRASS, 0, 0);
 	m_entity_manager->MakeEntity(ENTITY_BRICK, 0, 0);
-	//m_entity_manager->MakeEntity(ENTITY_BOMB, 64, 0);
+	m_entity_manager->MakeEntity(ENTITY_PWRUP_FIRE, 0, 0);
+	m_entity_manager->MakeEntity(ENTITY_PWRUP_SPEED, 0, 0);
+	m_entity_manager->MakeEntity(ENTITY_PWRUP_BOMB, 0, 0);
+
 	m_entity_manager->MakeEntity(ENTITY_STEVE, 0, 0);
+	m_entity_manager->MakeEntity(ENTITY_STEVE2, (m_map->GetWidth() - 1) * 64, (m_map->GetHeight() -1) * 64);
 	
 
 //	m_entity_manager->MakeEntity(ENTITY_FIRE, 120, 300);
@@ -78,7 +81,7 @@ GameState::GameState(System& system)
 	m_active = false;
 
 	m_background_music = m_systems.sound_manager->CreateMusicClip("../assets/multiplayer.mid");
-	m_background_music->Play();
+	//m_background_music->Play();
 }
 
 GameState::~GameState()
@@ -177,14 +180,17 @@ void GameState::Draw()
 
 	for (int y = 0; y < m_map->GetHeight(); y++){
 		for (int x = 0; x < m_map->GetWidth(); x++){
-			Sprite* sprite = (*m_entities)[m_map->GetPos(x, y)]->GetSprite();
-			if (sprite)
+			Sprite* sprite = (*m_entities)[1]->GetSprite();
+			m_systems.draw_manager->Draw(sprite, x * 64, y * 64);
+			if (m_map->GetPos(x, y) < 6 )
 			{
+				sprite = (*m_entities)[m_map->GetPos(x, y)]->GetSprite();
 				m_systems.draw_manager->Draw(sprite, x * 64, y * 64);
 			}
 		}
 	}
-	for (unsigned int i = 3; i < m_entities->size(); i++)
+
+	for (unsigned int i = 6; i < m_entities->size(); i++)
 	{
 		if (!(*m_entities)[i]->IsVisible())
 			continue;
@@ -193,8 +199,8 @@ void GameState::Draw()
 		if (sprite)
 		{
 			m_systems.draw_manager->Draw(sprite,
-				(*m_entities)[i]->GetX(),
-				(*m_entities)[i]->GetY());
+			(*m_entities)[i]->GetX(),
+			(*m_entities)[i]->GetY());
 		}
 	}
 }

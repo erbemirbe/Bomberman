@@ -6,11 +6,12 @@
 
 class EntityManager;
 class Steve;
+class Map;
 
 class Bomb:public Entity
 {
 public:
-	Bomb(Sprite* sprite, EntityManager* EntityManager, int x, int y);
+	Bomb(Sprite* sprite, EntityManager* EntityManager, Map* map, int x, int y);
 	~Bomb();
 
 	void Reset(int x, int y);
@@ -36,7 +37,7 @@ private:
 	Collider* m_collider;
 	Steve* m_owner;
 	EntityManager* m_entity_manager;
-
+	Map* m_map;
 };
 
 #endif //BOMB_H_INCLUDED

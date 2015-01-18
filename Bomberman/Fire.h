@@ -29,6 +29,7 @@ public:
 	void SetBlastRangeAndDirection(int blastRange, int fireDir);
 	void Blast(int xTile, int yTile, int dir);
 	void SetPosition(int x, int y);
+	void PowerUp();
 
 	void Update(float deltatime);
 	Sprite* GetSprite();
@@ -36,7 +37,7 @@ public:
 private:
 	float m_time;
 	int m_blast_range;
-
+	bool m_power_up;
 	Sprite* m_sprite;
 	Map* m_map;
 	EntityManager* m_entity_manager;

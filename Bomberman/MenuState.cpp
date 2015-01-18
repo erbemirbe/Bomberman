@@ -1,6 +1,7 @@
 //MenuState.cpp
 #include "stdafx.h"
 #include "MenuState.h"
+#include "StateManager.h"
 #include "Sprite.h"
 #include "SpriteText.h"
 #include "SpriteManager.h"
@@ -28,7 +29,10 @@ MenuState::MenuState(System& system)
 
 MenuState::~MenuState()
 {
+	std::cout << "Destroying menu!" << std::endl;
 	m_background_music->Stop();
+	m_background_music->Pause();
+	//m_background_music->anything please stop the music!!!!
 	delete m_background_music;
 }
 

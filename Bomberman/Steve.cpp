@@ -13,9 +13,9 @@
 
 #include <iostream>
 
-
-Steve::Steve(Keyboard* keyboard, EntityManager* entityManager, Map* map, Sprite* sprite, int x, int y)
+Steve::Steve(Keyboard* keyboard, EntityManager* entityManager, Map* map, Sprite* sprite, std::map<int,int>* controls , int x, int y)
 {
+	
 	m_keyboard = keyboard;
 	m_sprite = sprite;
 	m_entity_manager = entityManager;
@@ -31,7 +31,30 @@ Steve::Steve(Keyboard* keyboard, EntityManager* entityManager, Map* map, Sprite*
 	m_speed = 150.0f;
 
 	m_bombs = 0;
-	m_max_bombs = 3;
+	m_max_bombs = 1;
+	m_blast_range = 1;
+
+	auto it = controls->find(KEY_UP);
+	if (!(it == controls->end()))
+		m_c_up = it->second;
+
+	it = controls->find(KEY_LEFT);
+	if (!(it == controls->end()))
+		m_c_left = it->second;
+
+	it = controls->find(KEY_DOWN);
+	if (!(it == controls->end()))
+		m_c_down = it->second;
+
+	it = controls->find(KEY_RIGHT);
+	if (!(it == controls->end()))
+		m_c_right = it->second;
+
+	it = controls->find(KEY_BOMB);
+	if (!(it == controls->end()))
+		m_c_bomb = it->second;
+
+
 	
 	Reset();
 }
@@ -42,36 +65,60 @@ Steve::~Steve()
 		delete m_collider;
 }
 
+void Steve::SetName(std::string name){
+	m_name = name;
+}
+
 void Steve::Update(float deltatime)
 {
 
-	if (m_keyboard->IsKeyDownOnce(SDLK_w))
+	switch (m_map->GetPos((m_x + 32) / 64, (m_y + 32) / 64))
 	{
-		m_last_movement_key2 = m_last_movement_key;
-		m_last_movement_key = SDLK_w;
+	case BLOCK_PWRUP_BOMB:
+		m_max_bombs++;
+		m_map->SetPos((m_x + 32) / 64, (m_y + 32) / 64, BLOCK_GRASS);
+		break;
+	case BLOCK_PWRUP_FIRE:
+		m_blast_range++;
+		m_map->SetPos((m_x + 32) / 64, (m_y + 32) / 64, BLOCK_GRASS);
+		break;
+	case BLOCK_PWRUP_SPEED:
+		m_speed += 25;
+		m_map->SetPos((m_x + 32) / 64, (m_y + 32) / 64, BLOCK_GRASS);
+		break;
+	case BLOCK_FIRE:
+		std::cout << m_name << " is dead" << std::endl;
+		m_entity_manager->RecycleEntity(this);
+		break;
 	}
-	else if (m_keyboard->IsKeyDownOnce(SDLK_a))
+
+	if (m_keyboard->IsKeyDownOnce(m_c_up))
 	{
 		m_last_movement_key2 = m_last_movement_key;
-		m_last_movement_key = SDLK_a;
+		m_last_movement_key = m_c_up;
 	}
-	else if (m_keyboard->IsKeyDownOnce(SDLK_s))
+	else if (m_keyboard->IsKeyDownOnce(m_c_left))
 	{
 		m_last_movement_key2 = m_last_movement_key;
-		m_last_movement_key = SDLK_s;
+		m_last_movement_key = m_c_left;
 	}
-	else if (m_keyboard->IsKeyDownOnce(SDLK_d))
+	else if (m_keyboard->IsKeyDownOnce(m_c_down))
 	{
 		m_last_movement_key2 = m_last_movement_key;
-		m_last_movement_key = SDLK_d;
+		m_last_movement_key = m_c_down;
+	}
+	else if (m_keyboard->IsKeyDownOnce(m_c_right))
+	{
+		m_last_movement_key2 = m_last_movement_key;
+		m_last_movement_key = m_c_right;
 	}
 	else
 	{
 		if (!m_keyboard->IsKeyDown(m_last_movement_key)){
-			if (m_keyboard->IsKeyDown(SDLK_w)
-				|| m_keyboard->IsKeyDown(SDLK_a)
-				|| m_keyboard->IsKeyDown(SDLK_s)
-				|| m_keyboard->IsKeyDown(SDLK_d)
+			if (   m_keyboard->IsKeyDown(m_c_up)
+				|| m_keyboard->IsKeyDown(m_c_left)
+				|| m_keyboard->IsKeyDown(m_c_down)
+				|| m_keyboard->IsKeyDown(m_c_right)
 			)
 				m_last_movement_key = m_last_movement_key2;
 			else
@@ -79,7 +126,7 @@ void Steve::Update(float deltatime)
 		}
 	}
 
-	if (m_keyboard->IsKeyDownOnce(SDLK_v)) LayBomb();
+	if (m_keyboard->IsKeyDownOnce(m_c_bomb)) LayBomb();
 
 	int movement = m_speed * deltatime;
 
@@ -92,7 +139,7 @@ void Steve::Update(float deltatime)
 	}*/
 		
 	//(m_x+31)%64;
-	if (m_last_movement_key == SDLK_w)
+	if (m_last_movement_key == m_c_up)
 	{
 		if (m_y % 64)
 		{ //y position is not perfectly aligned with grid
@@ -108,7 +155,12 @@ void Steve::Update(float deltatime)
 				m_y -= movement;
 			}
 		}
-		else if (m_map->GetPos( ((m_x + 31) / 64),  ((m_y + 31) / 64 - 1) ) == 1)
+		else if (m_map->GetPos(((m_x + 31) / 64), ((m_y + 31) / 64 - 1)) == BLOCK_GRASS
+			|| m_map->GetPos(((m_x + 31) / 64), ((m_y + 31) / 64 - 1)) == BLOCK_FIRE
+			|| m_map->GetPos(((m_x + 31) / 64), ((m_y + 31) / 64 - 1)) == BLOCK_PWRUP_FIRE
+			|| m_map->GetPos(((m_x + 31) / 64), ((m_y + 31) / 64 - 1)) == BLOCK_PWRUP_BOMB
+			|| m_map->GetPos(((m_x + 31) / 64), ((m_y + 31) / 64 - 1)) == BLOCK_PWRUP_SPEED
+		)
 		{ //Block above is free
 			//std::cout << "b" << std::endl;
 			//std::cout << !(m_x % 64)<< "true?" << std::endl;
@@ -200,7 +252,12 @@ void Steve::Update(float deltatime)
 					//std::cout << ((m_x + 31) / 64) -1 << " " << ((m_y + 31) / 64) - 1 << std::endl;
 				}
 
-				if (b == 1)
+				if (   b == BLOCK_GRASS
+					|| b == BLOCK_FIRE
+					|| b == BLOCK_PWRUP_FIRE
+					|| b == BLOCK_PWRUP_BOMB
+					|| b == BLOCK_PWRUP_SPEED
+					)
 				{ //B is free
 					//std::cout << "b is free!" << std::endl;
 					if (m_x % 64 <= 32)
@@ -241,7 +298,7 @@ void Steve::Update(float deltatime)
 
 		}
 	}
-	if (m_last_movement_key == SDLK_a)
+	if (m_last_movement_key == m_c_left)
 	{
 		if (m_x % 64)
 		{ //y position is not perfectly aligned with grid
@@ -257,7 +314,12 @@ void Steve::Update(float deltatime)
 				m_x -= movement;
 			}
 		}
-		else if (m_map->GetPos(((m_x + 31) / 64 - 1), ((m_y + 31) / 64)) == 1)
+		else if (m_map->GetPos(((m_x + 31) / 64 - 1), ((m_y + 31) / 64)) == BLOCK_GRASS
+			|| m_map->GetPos(((m_x + 31) / 64), ((m_y + 31) / 64 - 1)) == BLOCK_FIRE
+			|| m_map->GetPos(((m_x + 31) / 64 - 1), ((m_y + 31) / 64)) == BLOCK_PWRUP_FIRE
+			|| m_map->GetPos(((m_x + 31) / 64 - 1), ((m_y + 31) / 64)) == BLOCK_PWRUP_BOMB
+			|| m_map->GetPos(((m_x + 31) / 64 - 1), ((m_y + 31) / 64)) == BLOCK_PWRUP_SPEED
+			)
 		{ //Block above is free
 			//std::cout << "b" << std::endl;
 			//std::cout << !(m_y % 64) << "true?" << std::endl;
@@ -290,7 +352,8 @@ void Steve::Update(float deltatime)
 
 				//std::cout << m_map->GetPos(2, 4);
 
-				if (b == 1)
+				if (b == 1
+					)
 				{ //B is free
 					//std::cout << " is free.. Look by yourself: "<< b << std::endl;
 					//if (m_x % 64 - movement < 0)
@@ -349,7 +412,11 @@ void Steve::Update(float deltatime)
 					//std::cout << ((m_y + 31) / 64) - 1 << " " << ((m_x + 31) / 64) - 1 << std::endl;
 				}
 
-				if (b == 1)
+				if (b == BLOCK_GRASS
+				|| b == BLOCK_FIRE
+				|| b == BLOCK_PWRUP_FIRE
+				|| b == BLOCK_PWRUP_BOMB
+				|| b == BLOCK_PWRUP_SPEED)
 				{ //B is free
 					//std::cout << "b is free!" << std::endl;
 					if (m_y % 64 <= 32)
@@ -390,7 +457,7 @@ void Steve::Update(float deltatime)
 
 		}
 	}
-	if (m_last_movement_key == SDLK_s)
+	if (m_last_movement_key == m_c_down)
 	{
 		if (m_y % 64)
 		{ //y position is not perfectly aligned with grid
@@ -406,7 +473,12 @@ void Steve::Update(float deltatime)
 				m_y += movement;
 			}
 		}
-		else if (m_map->GetPos(((m_x + 31) / 64), ((m_y + 31) / 64 + 1)) == 1)
+		else if (m_map->GetPos(((m_x + 31) / 64), ((m_y + 31) / 64 + 1)) == BLOCK_GRASS
+			|| m_map->GetPos(((m_x + 31) / 64), ((m_y + 31) / 64 - 1)) == BLOCK_FIRE
+			|| m_map->GetPos(((m_x + 31) / 64), ((m_y + 31) / 64 + 1)) == BLOCK_PWRUP_FIRE
+			|| m_map->GetPos(((m_x + 31) / 64), ((m_y + 31) / 64 + 1)) == BLOCK_PWRUP_BOMB
+			|| m_map->GetPos(((m_x + 31) / 64), ((m_y + 31) / 64 + 1)) == BLOCK_PWRUP_SPEED
+			)
 		{ //Block above is free
 			//std::cout << "b" << std::endl;
 			//std::cout << !(m_x % 64) << "true?" << std::endl;
@@ -439,7 +511,11 @@ void Steve::Update(float deltatime)
 
 				//std::cout << m_map->GetPos(2, 4);
 
-				if (b == 1)
+				if (b == BLOCK_GRASS
+					|| b == BLOCK_FIRE
+					|| b == BLOCK_PWRUP_FIRE
+					|| b == BLOCK_PWRUP_BOMB
+					|| b == BLOCK_PWRUP_SPEED)
 				{ //B is free
 					//std::cout << " is free.. Look by yourself: "<< b << std::endl;
 					//if (m_y % 64 - movement < 0)
@@ -498,7 +574,11 @@ void Steve::Update(float deltatime)
 					//std::cout << ((m_x + 31) / 64) - 1 << " " << ((m_y + 31) / 64) - 1 << std::endl;
 				}
 
-				if (b == 1)
+				if (b == BLOCK_GRASS
+					|| b == BLOCK_FIRE
+					|| b == BLOCK_PWRUP_FIRE
+					|| b == BLOCK_PWRUP_BOMB
+					|| b == BLOCK_PWRUP_SPEED)
 				{ //B is free
 					//std::cout << "b is free!" << std::endl;
 					if (m_x % 64 <= 32)
@@ -539,7 +619,7 @@ void Steve::Update(float deltatime)
 
 		}
 	}
-	if (m_last_movement_key == SDLK_d)
+	if (m_last_movement_key == m_c_right)
 	{
 		if (m_x % 64)
 		{ //y position is not perfectly aligned with grid
@@ -555,7 +635,11 @@ void Steve::Update(float deltatime)
 				m_x += movement;
 			}
 		}
-		else if (m_map->GetPos(((m_x + 31) / 64 + 1), ((m_y + 31) / 64)) == 1)
+		else if (m_map->GetPos(((m_x + 31) / 64 + 1), ((m_y + 31) / 64)) == BLOCK_GRASS
+			|| m_map->GetPos(((m_x + 31) / 64 + 1), ((m_y + 31) / 64)) == BLOCK_FIRE
+			|| m_map->GetPos(((m_x + 31) / 64 + 1), ((m_y + 31) / 64)) == BLOCK_PWRUP_FIRE
+			|| m_map->GetPos(((m_x + 31) / 64 + 1), ((m_y + 31) / 64)) == BLOCK_PWRUP_BOMB
+			|| m_map->GetPos(((m_x + 31) / 64 + 1), ((m_y + 31) / 64)) == BLOCK_PWRUP_SPEED)
 		{ //Block above is free
 			//std::cout << "b" << std::endl;
 			//std::cout << !(m_y % 64) << "true?" << std::endl;
@@ -588,7 +672,11 @@ void Steve::Update(float deltatime)
 
 				//std::cout << m_map->GetPos(2, 4);
 
-				if (b == 1)
+				if (b == BLOCK_GRASS
+					|| b == BLOCK_FIRE
+					|| b == BLOCK_PWRUP_FIRE
+					|| b == BLOCK_PWRUP_BOMB
+					|| b == BLOCK_PWRUP_SPEED)
 				{ //B is free
 					//std::cout << " is free.. Look by yourself: "<< b << std::endl;
 					//if (m_x % 64 - movement < 0)
@@ -647,7 +735,11 @@ void Steve::Update(float deltatime)
 					//std::cout << ((m_y + 31) / 64) - 1 << " " << ((m_x + 31) / 64) - 1 << std::endl;
 				}
 
-				if (b == 1)
+				if (b == BLOCK_GRASS
+					|| b == BLOCK_FIRE
+					|| b == BLOCK_PWRUP_FIRE
+					|| b == BLOCK_PWRUP_BOMB
+					|| b == BLOCK_PWRUP_SPEED)
 				{ //B is free
 					//std::cout << "b is free!" << std::endl;
 					if (m_y % 64 <= 32)
@@ -688,6 +780,8 @@ void Steve::Update(float deltatime)
 		}
 	}
 }
+
+
 
 void move(){
 	//	if ()
@@ -790,7 +884,9 @@ void move(){
 
 void Steve::LayBomb()
 {
-	if (m_bombs < m_max_bombs)
+	int getBlock = m_map->GetPos((m_x + 32) / 64, (m_y + 32) / 64);
+	if (m_bombs < m_max_bombs
+	&&( getBlock == BLOCK_FIRE || getBlock == BLOCK_GRASS ))
 	{
 		Bomb* bomb =(Bomb*) m_entity_manager->MakeEntity(
 			ENTITY_BOMB,
@@ -807,6 +903,9 @@ void Steve::ReturnBomb()
 	m_bombs--;
 }
 
+int Steve::GetBlastRange(){
+	return m_blast_range;
+}
 
 Sprite* Steve::GetSprite()
 {
